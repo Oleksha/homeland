@@ -7,3 +7,6 @@ Route::get('/', fn () => redirect('/vats'))->name('home');
 
 Route::resource('vats', Controllers\VatController::class)
     ->except(['show']);
+Route::resource('contractor-types', Controllers\ContractorTypeController::class)
+    ->except(['show']);
+
