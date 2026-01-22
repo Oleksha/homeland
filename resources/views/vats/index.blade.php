@@ -22,14 +22,14 @@
         <tbody>
         @foreach($vats as $vat)
             <tr>
-                <td>{{ $vat->name }}</td>
-                <td class="text-end">{{ $vat->rate }}%</td>
-                <td class="text-center">
+                <td class="align-middle">{{ $vat->name }}</td>
+                <td class="text-end align-middle">{{ $vat->rate }}%</td>
+                <td class="text-center align-middle">
                     @if($vat->is_default)
                         <span class="badge bg-success">Да</span>
                     @endif
                 </td>
-                <td class="text-end">
+                <td class="text-end align-middle">
                     <a
                         href="{{ route('vats.edit', $vat) }}"
                         class="btn btn-sm btn-outline-primary"
