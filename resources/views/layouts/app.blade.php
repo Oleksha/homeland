@@ -38,6 +38,11 @@
                                 НДС
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('contractor-types.index') }}">
+                                Типы контрагентов
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
