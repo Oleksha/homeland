@@ -10,7 +10,7 @@
         </a>
     </div>
 
-    <table class="table table-striped align-middle">
+    <table class="table align-middle">
         <thead>
         <tr>
             <th>ID</th>
