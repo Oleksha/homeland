@@ -10,7 +10,7 @@
         </a>
     </div>
 
-    <table class="table table-bordered table-hover">
+    <table class="table table-striped align-middle">
         <thead class="table-light">
         <tr>
             <th>Название</th>
