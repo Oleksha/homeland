@@ -13,47 +13,17 @@
             src="{{ asset('/assets/jquery-3.7.1/jquery-3.7.1.min.js') }}"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
+{{-- Навигация --}}
+<x-navigation />
+{{-- Контент --}}
+<main class="container py-4 flex-grow-1">
+    @isset($breadcrumbs)
+        <x-breadcrumbs :items="$breadcrumbs" />
+    @endisset
 
-<nav class="navbar navbar-expand-lg navbar-expand-lg bg-body-tertiary">
-    <div class="container">
-        <a class="navbar-brand" href="{{ route('home') }}">
-            <x-icon width="40" height="32"  name="logo" />
-        </a>
-
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item dropdown">
-                    <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                    >
-                        Справочники
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="{{ route('vats.index') }}">
-                                НДС
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('contractor-types.index') }}">
-                                Типы контрагентов
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<main class="container my-4 flex-grow-1">
     @yield('content')
 </main>
-
+{{-- Футер --}}
 <x-footer />
 
 <button
