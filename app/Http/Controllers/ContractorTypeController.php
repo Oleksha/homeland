@@ -17,6 +17,10 @@ class ContractorTypeController extends Controller
     {
         return view('contractor-types.index', [
             'types' => ContractorType::orderBy('name')->get(),
+            'breadcrumbs' => [
+                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'Типы контрагентов'],
+            ],
         ]);
     }
 
@@ -24,6 +28,11 @@ class ContractorTypeController extends Controller
     {
         return view('contractor-types.form', [
             'type' => new ContractorType(),
+            'breadcrumbs' => [
+                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'Типы контрагентов', 'url' => route('contractor-types.index')],
+                ['title' => 'Добавление'],
+            ],
         ]);
     }
 
@@ -42,6 +51,11 @@ class ContractorTypeController extends Controller
     {
         return view('contractor-types.form', [
             'type' => $contractorType,
+            'breadcrumbs' => [
+                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'Типы контрагентов', 'url' => route('contractor-types.index')],
+                ['title' => 'Редактирование'],
+            ],
         ]);
     }
 
