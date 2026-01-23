@@ -14,7 +14,7 @@ class ContractorController extends Controller
     public function index()
     {
         return view('contractors.index', [
-            'contractors' => Contractor::with('type', 'vat')
+            'contractors' => Contractor::with(['type', 'vat'])
                 ->orderBy('name')
                 ->get(),
             'breadcrumbs' => [
@@ -28,7 +28,7 @@ class ContractorController extends Controller
     {
         return view('contractors.archive', [
             'contractors' => Contractor::onlyTrashed()
-                ->with('type', 'vat')
+                ->with(['type', 'vat'])
                 ->orderBy('name')
                 ->get(),
             'breadcrumbs' => [
