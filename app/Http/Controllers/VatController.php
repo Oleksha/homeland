@@ -6,7 +6,6 @@ use App\DTO\Vat\VatData;
 use App\Http\Requests\VatRequest;
 use App\Models\Vat;
 use App\Services\Vat\VatService;
-use Illuminate\Http\Request;
 use Throwable;
 
 class VatController extends Controller
@@ -19,6 +18,10 @@ class VatController extends Controller
     {
         return view('vats.index', [
             'vats' => $this->vatService->getActive(),
+            'breadcrumbs' => [
+                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'НДС'],
+            ],
         ]);
     }
 
@@ -26,6 +29,11 @@ class VatController extends Controller
     {
         return view('vats.form', [
             'vat' => new Vat(),
+            'breadcrumbs' => [
+                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'НДС', 'url' => route('vats.index')],
+                ['title' => 'Добавление'],
+            ],
         ]);
     }
 
@@ -45,7 +53,14 @@ class VatController extends Controller
 
     public function edit(Vat $vat)
     {
-        return view('vats.form', compact('vat'));
+        return view('vats.form', [
+            'vat' => $vat,
+            'breadcrumbs' => [
+                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'НДС', 'url' => route('vats.index')],
+                ['title' => 'Редактирование'],
+            ],
+        ]);
     }
 
     /**
