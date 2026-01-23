@@ -44,6 +44,14 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a
+                                class="dropdown-item {{ $isActive('contractors.*') }}"
+                                href="{{ route('contractors.index') }}"
+                            >
+                                Контрагенты
+                            </a>
+                        </li>
+                        <li>
+                            <a
                                 class="dropdown-item {{ $isActive('vats.*') }}"
                                 href="{{ route('vats.index') }}"
                             >
