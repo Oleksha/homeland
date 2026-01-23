@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\DTO\Contractor\ContractorData;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ContractorRequest;
 use App\Models\Contractor;
 use App\Models\ContractorType;
 use App\Models\Vat;
 use App\Services\Contractor\ContractorService;
-use Illuminate\Http\Request;
 
 class ContractorController extends Controller
 {
@@ -94,20 +92,6 @@ class ContractorController extends Controller
         ]);
     }
 
-    public function update2(
-        ContractorRequest $request,
-        Contractor $contractor,
-        ContractorService $service
-    ) {
-        $service->update(
-            $contractor,
-            ContractorData::fromArray($request->validated())
-        );
-
-        return redirect()
-            ->route('contractors.index')
-            ->with('success', 'Контрагент обновлён');
-    }
     public function update(
         ContractorRequest $request,
         Contractor $contractor,
