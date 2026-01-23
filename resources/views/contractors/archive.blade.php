@@ -12,7 +12,7 @@
         </a>
     </div>
 
-    <table class="table table-hover align-middle">
+    <table class="table table-striped align-middle mb-0">
         <thead>
         <tr>
             <th>Наименование</th>
