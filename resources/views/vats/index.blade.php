@@ -11,7 +11,7 @@
     </div>
 
     <table class="table table-striped align-middle">
-        <thead class="table-light">
+        <thead>
         <tr>
             <th>Название</th>
             <th class="text-end">Ставка</th>
