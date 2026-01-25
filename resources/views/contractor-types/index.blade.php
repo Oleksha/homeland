@@ -10,7 +10,7 @@
         </a>
     </div>
 
-    <table class="table align-middle">
+    <table class="table table-striped align-middle">
         <thead>
         <tr>
             <th>ID</th>
@@ -19,7 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($types as $type)
+        @forelse($types as $type)
             <tr>
                 <td>{{ $type->id }}</td>
                 <td>{{ $type->name }}</td>
@@ -41,7 +41,13 @@
                     </form>
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan="8" class="text-center text-muted py-4">
+                    Типы контрагентов не найдены
+                </td>
+            </tr>
+        @endforelse
         </tbody>
     </table>
 @endsection

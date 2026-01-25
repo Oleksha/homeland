@@ -18,15 +18,3 @@ Route::delete('contractors/{id}/force-delete', [Controllers\ContractorController
     ->name('contractors.forceDelete');
 Route::resource('contractors', Controllers\ContractorController::class);
 
-<?php
-
-use App\Http\Controllers;
-use Illuminate\Support\Facades\Route;
-
-Route::get('/', fn () => redirect('/vats'))->name('home');
-
-Route::resource('vats', Controllers\VatController::class)
-    ->except(['show']);
-Route::resource('contractor-types', Controllers\ContractorTypeController::class)
-    ->except(['show']);
-

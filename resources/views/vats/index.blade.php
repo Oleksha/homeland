@@ -20,7 +20,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($vats as $vat)
+        @forelse($vats as $vat)
             <tr>
                 <td class="align-middle">{{ $vat->name }}</td>
                 <td class="text-end align-middle">{{ $vat->rate }}%</td>
@@ -55,7 +55,13 @@
                     </form>
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan="8" class="text-center text-muted py-4">
+                    Ставки НДС не найдены
+                </td>
+            </tr>
+        @endforelse
         </tbody>
     </table>
 @endsection
