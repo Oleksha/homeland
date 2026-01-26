@@ -19,7 +19,7 @@ class VatController extends Controller
         return view('vats.index', [
             'vats' => $this->vatService->getActive(),
             'breadcrumbs' => [
-                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'НДС'],
             ],
         ]);
@@ -30,7 +30,7 @@ class VatController extends Controller
         return view('vats.form', [
             'vat' => new Vat(),
             'breadcrumbs' => [
-                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'НДС', 'url' => route('vats.index')],
                 ['title' => 'Добавление'],
             ],
@@ -56,7 +56,7 @@ class VatController extends Controller
         return view('vats.form', [
             'vat' => $vat,
             'breadcrumbs' => [
-                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'НДС', 'url' => route('vats.index')],
                 ['title' => 'Редактирование'],
             ],
