@@ -33,8 +33,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a
-                        class="nav-link dropdown-toggle {{ $isActive('vats.*', 'contractor-types.*') }}"
-                        href="#"
+                        class="nav-link dropdown-toggle {{ $isActive('vats.*', 'contractor-types.*', 'directories.*', 'contractors.*') }}"
                         role="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
@@ -42,6 +41,13 @@
                         Справочники
                     </a>
                     <ul class="dropdown-menu">
+                        <li>
+                            <a
+                                class="dropdown-item {{ $isActive('directories.*') }}"
+                                href="{{ route('directories.index') }}">
+                                Все справочники
+                            </a>
+                        </li>
                         <li>
                             <a
                                 class="dropdown-item {{ $isActive('contractors.*') }}"
