@@ -18,7 +18,7 @@ class ContractorController extends Controller
                 ->orderBy('name')
                 ->get(),
             'breadcrumbs' => [
-                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'Контрагенты'],
             ],
         ]);
@@ -32,7 +32,7 @@ class ContractorController extends Controller
                 ->orderBy('name')
                 ->get(),
             'breadcrumbs' => [
-                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'Контрагенты', 'url' => route('contractors.index')],
                 ['title' => 'Архив'],
             ],
@@ -46,7 +46,7 @@ class ContractorController extends Controller
             'types' => ContractorType::all(),
             'vats' => Vat::all(),
             'breadcrumbs' => [
-                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'Контрагенты', 'url' => route('contractors.index')],
                 ['title' => 'Добавление'],
             ],
@@ -71,7 +71,7 @@ class ContractorController extends Controller
         return view('contractors.show', [
             'contractor' => $contractor,
             'breadcrumbs' => [
-                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'Контрагенты', 'url' => route('contractors.index')],
                 ['title' => $contractor->name],
             ],
@@ -85,7 +85,7 @@ class ContractorController extends Controller
             'types' => ContractorType::orderBy('name')->get(),
             'vats' => Vat::orderBy('rate')->get(),
             'breadcrumbs' => [
-                ['title' => 'Справочники', 'url' => '#'],
+                ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'Контрагенты', 'url' => route('contractors.index')],
                 ['title' => 'Редактирование'],
             ],
