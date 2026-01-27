@@ -1,0 +1,60 @@
+<?php
+
+namespace App\DTO\Receipt;
+
+use App\Enums\ReceiptType;
+use Carbon\Carbon;
+use InvalidArgumentException;
+
+final readonly class ReceiptDTO
+{
+    /**
+     * @param ReceiptItemDTO[] $items
+     */
+    public function __construct(
+        public Carbon      $date,
+        public string      $number,
+        public ReceiptType $type,
+        public int         $contractor_id,
+        public ?string     $document_number,
+        public ?Carbon     $document_date,
+        public ?string     $note,
+        public bool        $status,
+        public float       $total_amount,
+        public float       $total_vat,
+        public array       $items,
+    )
+    {
+    }
+
+    public static function fromRequest(array $data): self
+    {
+        if (!isset($data['date'])) {
+            throw new InvalidArgumentException('Receipt date is required');
+        }
+
+        $items = collect($data['items'] ?? [])
+            ->map(fn($item) => ReceiptItemDTO::fromArray($item))
+            ->values()
+            ->all();
+
+        $totalAmount = collect($items)->sum('total_amount');
+        $totalVat = collect($items)->sum('vat_amount');
+
+        return new self(
+            date: Carbon::parse($data['date']),
+            number: $data['number'],
+            type: ReceiptType::from((int)$data['type']),
+            contractor_id: (int)$data['contractor_id'],
+            document_number: $data['document_number'] ?? null,
+            document_date: !empty($data['document_date'])
+                ? Carbon::parse($data['document_date'])
+                : null,
+            note: $data['note'] ?? null,
+            status: (bool)($data['status'] ?? true),
+            total_amount: round($totalAmount, 2),
+            total_vat: round($totalVat, 2),
+            items: $items,
+        );
+    }
+}
