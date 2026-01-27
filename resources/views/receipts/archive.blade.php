@@ -13,7 +13,7 @@
         </div>
 
         <table class="table table-striped align-middle">
-            <thead class="table-light">
+            <thead>
             <tr>
                 <th>ID</th>
                 <th>Дата</th>
