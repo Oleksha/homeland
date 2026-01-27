@@ -26,7 +26,12 @@ class ReceiptController extends Controller
             ->orderByDesc('date')
             ->paginate(20);
 
-        return view('receipts.index', compact('receipts'));
+        return view('receipts.index', [
+            'receipts' => $receipts,
+            'breadcrumbs' => [
+                ['title' => 'Поступления'],
+            ],
+        ]);
     }
 
     /**
@@ -38,6 +43,10 @@ class ReceiptController extends Controller
             'receipt' => new Receipt(),
             'contractors' => Contractor::orderBy('name')->get(),
             'vats'        => Vat::orderBy('rate')->get(),
+            'breadcrumbs' => [
+                ['title' => 'Поступления', 'url' => route('receipts.index')],
+                ['title' => 'Добавление'],
+            ],
         ]);
     }
 
@@ -65,7 +74,13 @@ class ReceiptController extends Controller
             'items.vat',
         ]);
 
-        return view('receipts.show', compact('receipt'));
+        return view('receipts.show', [
+            'receipt' => $receipt,
+            'breadcrumbs' => [
+                ['title' => 'Поступления', 'url' => route('receipts.index')],
+                ['title' => "Поступление №{$receipt->number}"],
+            ],
+        ]);
     }
 
     /**
@@ -77,6 +92,10 @@ class ReceiptController extends Controller
             'receipt' => $receipt,
             'contractors' => Contractor::all(),
             'vats' => Vat::all(),
+            'breadcrumbs' => [
+                ['title' => 'Поступления', 'url' => route('receipts.index')],
+                ['title' => 'Изменение поступления ' . $receipt->number],
+            ],
         ]);
     }
 
@@ -113,7 +132,13 @@ class ReceiptController extends Controller
     {
         $receipts = Receipt::onlyTrashed()->with('contractor')->get();
 
-        return view('receipts.archive', compact('receipts'));
+        return view('receipts.archive', [
+            'receipts' => $receipts,
+            'breadcrumbs' => [
+                ['title' => 'Поступления', 'url' => route('receipts.index')],
+                ['title' => 'Просмотр архивных поступлений'],
+            ],
+        ]);
     }
 
     /**
