@@ -6,9 +6,12 @@ use App\Enums\ReceiptType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Receipt extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'date',
         'number',
@@ -30,6 +33,8 @@ class Receipt extends Model
         'total_vat' => 'decimal:2',
         'status' => 'boolean',
     ];
+
+    protected array $dates = ['date', 'document_date', 'deleted_at'];
 
     public function items(): HasMany
     {
