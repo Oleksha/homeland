@@ -12,44 +12,14 @@ readonly class ReceiptService
     public function __construct(
         private ReceiptCalculator $calculator
     ) {}
+
     /**
-     * Создать поступление с элементами
+     * Создать поступление
      * @throws Throwable
      */
     public function create(ReceiptDTO $dto): Receipt
     {
-        return DB::transaction(function () use ($dto) {
-
-            $totals = $this->calculator->calculateTotals($dto->items);
-
-            $receipt = Receipt::create([
-                'date' => $dto->date,
-                'number' => $dto->number,
-                'type' => $dto->type,
-                'contractor_id' => $dto->contractor_id,
-                'document_number' => $dto->document_number,
-                'document_date' => $dto->document_date,
-                'note' => $dto->note,
-                'status' => $dto->status,
-                'total_amount' => $totals['total_amount'],
-                'total_vat' => $totals['total_vat'],
-            ]);
-
-            foreach ($dto->items as $item) {
-                $row = $this->calculator->calculateItem($item);
-                $receipt->items()->create([
-                    'name' => $item->name,
-                    'quantity' => $item->quantity,
-                    'price' => $item->price,
-                    'vat_id' => $item->vat_id,
-                    'amount' => $row['amount'],
-                    'vat_amount' => $row['vat_amount'],
-                    'total_amount' => $row['total_amount'],
-                ]);
-            }
-
-            return $receipt;
-        });
+        return $this->save(new Receipt(), $dto);
     }
 
     /**
@@ -58,11 +28,21 @@ readonly class ReceiptService
      */
     public function update(Receipt $receipt, ReceiptDTO $dto): Receipt
     {
+        return $this->save($receipt, $dto);
+    }
+
+    /**
+     * Общий приватный метод сохранения
+     * @throws Throwable
+     */
+    private function save(Receipt $receipt, ReceiptDTO $dto): Receipt
+    {
         return DB::transaction(function () use ($receipt, $dto) {
 
             $totals = $this->calculator->calculateTotals($dto->items);
 
-            $receipt->update([
+            // Сохраняем шапку
+            $receipt->fill([
                 'date' => $dto->date,
                 'number' => $dto->number,
                 'type' => $dto->type,
@@ -73,10 +53,14 @@ readonly class ReceiptService
                 'status' => $dto->status,
                 'total_amount' => $totals['total_amount'],
                 'total_vat' => $totals['total_vat'],
-            ]);
+            ])->save();
 
-            $receipt->items()->delete();
+            // Удаляем старые строки (если это update)
+            if ($receipt->exists) {
+                $receipt->items()->delete();
+            }
 
+            // Создаем строки
             foreach ($dto->items as $item) {
                 $row = $this->calculator->calculateItem($item);
                 $receipt->items()->create([
