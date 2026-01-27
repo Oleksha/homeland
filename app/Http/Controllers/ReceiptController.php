@@ -11,6 +11,11 @@ use Throwable;
 
 class ReceiptController extends Controller
 {
+    public function __construct(
+        private ReceiptService $service,
+    )
+    {}
+
     /**
      * Список поступлений
      */
@@ -35,16 +40,15 @@ class ReceiptController extends Controller
             'vats'        => Vat::orderBy('rate')->get(),
         ]);
     }
-    
+
     /**
      * Сохранение
      * @throws Throwable
      */
     public function store(
-        ReceiptRequest $request,
-        ReceiptService $service)
+        ReceiptRequest $request)
     {
-        $service->create($request->validatedDTO());
+        $this->service->create($request->validatedDTO());
 
         return redirect()
             ->route('receipts.index')
@@ -75,17 +79,16 @@ class ReceiptController extends Controller
             'vats' => Vat::all(),
         ]);
     }
-    
+
     /**
      * Обновление
      * @throws Throwable
      */
     public function update(
         ReceiptRequest $request,
-        Receipt $receipt,
-        ReceiptService $service)
+        Receipt $receipt)
     {
-        $service->update($receipt, $request->validatedDTO());
+        $this->service->update($receipt, $request->validatedDTO());
 
         return redirect()
             ->route('receipts.show', $receipt)
@@ -97,10 +100,44 @@ class ReceiptController extends Controller
      */
     public function destroy(Receipt $receipt)
     {
-        $receipt->delete();
+        $this->service->delete($receipt); // soft delete через сервис
+        return redirect()
+            ->route('receipts.index')
+            ->with('success', 'Поступление перемещено в архив.');
+    }
+
+    /**
+     * Просмотр архива
+     */
+    public function archive()
+    {
+        $receipts = Receipt::onlyTrashed()->with('contractor')->get();
+
+        return view('receipts.archive', compact('receipts'));
+    }
+
+    /**
+     * Восстановление из архива
+     */
+    public function restore(int $id)
+    {
+        $receipt = Receipt::withTrashed()->findOrFail($id);
+        $this->service->restore($receipt);
 
         return redirect()
             ->route('receipts.index')
-            ->with('success', 'Поступление удалено');
+            ->with('success', 'Поступление восстановлено');
+    }
+
+    /**
+     * Окончательное удаление
+     */
+    public function forceDelete(int $id)
+    {
+        Receipt::withTrashed()->findOrFail($id)->forceDelete();
+
+        return redirect()
+            ->route('receipts.archive')
+            ->with('success', 'Поступление удалено окончательно');
     }
 }
