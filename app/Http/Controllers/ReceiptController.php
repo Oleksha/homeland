@@ -12,7 +12,7 @@ use Throwable;
 class ReceiptController extends Controller
 {
     public function __construct(
-        private ReceiptService $service,
+        private readonly ReceiptService $service,
     )
     {}
 
