@@ -79,10 +79,22 @@ readonly class ReceiptService
     }
 
     /**
-     * Опционально: удалить (soft delete)
+     * Удаление (soft delete)
      */
     public function delete(Receipt $receipt): void
     {
+        // Soft delete всех строк
+        $receipt->items()->delete();
+
+        // Soft delete шапки
         $receipt->delete();
+    }
+
+    /**
+     * Восстановление записей
+     */
+    public function restore(Receipt $receipt): void
+    {
+        $receipt->restore();
     }
 }
