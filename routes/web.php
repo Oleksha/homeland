@@ -23,3 +23,5 @@ Route::delete('contractors/{id}/force-delete', [Controllers\ContractorController
     ->name('contractors.forceDelete');
 Route::resource('contractors', Controllers\ContractorController::class);
 
+// Поступления
+Route::resource('receipts', Controllers\ReceiptController::class);
