@@ -17,6 +17,14 @@
             </div>
 
             <div class="d-flex gap-2">
+                <form action="{{ route('receipts.destroy', $receipt) }}" method="POST" class="d-inline"
+                      onsubmit="return confirm('Вы уверены, что хотите удалить поступление?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        Удалить
+                    </button>
+                </form>
                 <a href="{{ route('receipts.edit', $receipt) }}" class="btn btn-outline-primary btn-sm">
                     Изменить
                 </a>
