@@ -23,12 +23,12 @@
 
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav me-auto">
-                <li>
+                <li class="nav-item">
                     <a
-                        class="nav-item nav-link"
-                        href="{{ url('dashboard') }}"
+                        class="nav-link {{ request()->routeIs('receipts.*') ? 'active' : '' }}"
+                        href="{{ route('receipts.index') }}"
                     >
-                        Дашбоард
+                        Поступления
                     </a>
                 </li>
                 <li class="nav-item dropdown">
