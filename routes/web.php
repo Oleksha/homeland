@@ -24,4 +24,13 @@ Route::delete('contractors/{id}/force-delete', [Controllers\ContractorController
 Route::resource('contractors', Controllers\ContractorController::class);
 
 // Поступления
+Route::prefix('receipts')->group(function () {
+    Route::get('/archive', [Controllers\ReceiptController::class, 'archive'])
+        ->name('receipts.archive');
+    Route::post('/{id}/restore', [Controllers\ReceiptController::class, 'restore'])
+        ->name('receipts.restore');
+    Route::delete('/{id}/force-delete', [Controllers\ReceiptController::class, 'forceDelete'])
+        ->name('receipts.forceDelete');
+});
+
 Route::resource('receipts', Controllers\ReceiptController::class);
