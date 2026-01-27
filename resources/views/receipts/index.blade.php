@@ -8,14 +8,19 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="mb-0">Поступления</h4>
 
-            <a href="{{ route('receipts.create') }}" class="btn btn-primary">
-                + Добавить поступление
-            </a>
+            <div>
+                <a href="{{ route('receipts.archive') }}" class="btn btn-outline-secondary">
+                    Архив
+                </a>
+                <a href="{{ route('receipts.create') }}" class="btn btn-primary">
+                    + Добавить поступление
+                </a>
+            </div>
         </div>
 
         <div class="card">
             <div class="card-body p-0">
-                <table class="table table-hover table-striped mb-0 align-middle">
+                <table class="table table-striped align-middle mb-0">
                     <thead class="table-light">
                     <tr>
                         <th>Дата</th>
@@ -32,7 +37,11 @@
                     @forelse($receipts as $receipt)
                         <tr>
                             <td>{{ $receipt->date->format('d.m.Y') }}</td>
-                            <td>{{ $receipt->number }}</td>
+                            <td>
+                                <a href="{{ route('receipts.show', $receipt) }}">
+                                    <strong>{{ $receipt->number }}</strong>
+                                </a>
+                            </td>
                             <td>{{ $receipt->type->label() }}</td>
                             <td>{{ $receipt->contractor->name }}</td>
                             <td class="text-end">{{ number_format($receipt->total_amount, 2, ',', ' ') }}</td>
@@ -43,12 +52,17 @@
                             </span>
                             </td>
                             <td class="text-end">
-                                <a href="{{ route('receipts.show', $receipt) }}" class="btn btn-sm btn-outline-secondary">
-                                    Просмотр
-                                </a>
                                 <a href="{{ route('receipts.edit', $receipt) }}" class="btn btn-sm btn-outline-primary">
-                                    Изменить
+                                    ✏️
                                 </a>
+                                <form action="{{ route('receipts.destroy', $receipt) }}" method="POST" class="d-inline"
+                                      onsubmit="return confirm('Вы уверены, что хотите удалить поступление?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        🗑
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @empty
