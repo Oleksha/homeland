@@ -2,26 +2,39 @@
 
 namespace App\DTO\Receipt;
 
-use App\Models\Vat;
-
 final readonly class ReceiptItemDTO
 {
     public function __construct(
         public string $name,
         public float  $quantity,
-        public float  $price,
+        public float  $price, // цена С НДС
         public int    $vat_id,
-        public float  $vat_rate,
+        public float  $amount,       // без НДС
+        public float  $vat_amount,
+        public float  $total_amount, // С НДС
     ) {}
 
-    public static function fromArray(array $data): self
+    public static function fromArray(array $data, float $vatRate): self
     {
+        $quantity = (float) $data['quantity'];
+        $price = (float) $data['price'];
+
+        $total = round($quantity * $price, 2);
+
+        $vatAmount = $vatRate > 0
+            ? round($total * $vatRate / (100 + $vatRate), 2)
+            : 0.0;
+
+        $amount = round($total - $vatAmount, 2);
+
         return new self(
             name: $data['name'],
-            quantity: (float) $data['quantity'],
-            price: (float) $data['price'],
+            quantity: $quantity,
+            price: $price,
             vat_id: (int) $data['vat_id'],
-            vat_rate: (float) Vat::findOrFail($data['vat_id'])->rate,
+            amount: $amount,
+            vat_amount: $vatAmount,
+            total_amount: $total,
         );
     }
 }
