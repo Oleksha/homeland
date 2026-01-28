@@ -41,7 +41,11 @@
                         </a>
                     </td>
                     <td>{{ $receipt->type->label() }}</td>
-                    <td>{{ $receipt->contractor->name }}</td>
+                    <td>
+                        <a href="{{ route('contractors.show', $receipt->contractor_id) }}">
+                            {{ $receipt->contractor->name }}
+                        </a>
+                    </td>
                     <td class="text-end">{{ number_format($receipt->total_amount, 2, ',', ' ') }}</td>
                     <td class="text-end">{{ number_format($receipt->total_vat, 2, ',', ' ') }}</td>
                     <td class="text-center">
