@@ -20,26 +20,32 @@ final readonly class ReceiptDTO
         public ?Carbon     $document_date,
         public ?string     $note,
         public bool        $status,
-        public float       $total_amount,
-        public float       $total_vat,
+        public float       $total_amount, // сумма С НДС
+        public float       $total_vat,    // НДС внутри суммы
         public array       $items,
-    )
-    {
-    }
+    ) {}
 
-    public static function fromRequest(array $data): self
+    public static function fromRequest(array $data, array $vatRates): self
     {
-        if (!isset($data['date'])) {
-            throw new InvalidArgumentException('Receipt date is required');
+        if (empty($data['date'])) {
+            throw new InvalidArgumentException('Требуется указать дату поступления.');
         }
 
         $items = collect($data['items'] ?? [])
-            ->map(fn($item) => ReceiptItemDTO::fromArray($item))
+            ->map(function ($item) use ($vatRates) {
+                $vatId = (int) $item['vat_id'];
+
+                if (!isset($vatRates[$vatId])) {
+                    throw new InvalidArgumentException("Неизвестная ставка НДС: $vatId");
+                }
+
+                return ReceiptItemDTO::fromArray(
+                    $item,
+                    (float) $vatRates[$vatId]
+                );
+            })
             ->values()
             ->all();
-
-        $totalAmount = collect($items)->sum('total_amount');
-        $totalVat = collect($items)->sum('vat_amount');
 
         return new self(
             date: Carbon::parse($data['date']),
@@ -52,8 +58,8 @@ final readonly class ReceiptDTO
                 : null,
             note: $data['note'] ?? null,
             status: (bool)($data['status'] ?? true),
-            total_amount: round($totalAmount, 2),
-            total_vat: round($totalVat, 2),
+            total_amount: round(collect($items)->sum('total_amount'), 2),
+            total_vat: round(collect($items)->sum('vat_amount'), 2),
             items: $items,
         );
     }
