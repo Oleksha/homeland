@@ -30,7 +30,11 @@
                     <td>{{ $receipt->id }}</td>
                     <td>{{ optional($receipt->date)->format('Y-m-d') }}</td>
                     <td>{{ $receipt->number }}</td>
-                    <td>{{ $receipt->contractor->name ?? '-' }}</td>
+                    <td>
+                        <a href="{{ route('contractors.show', $receipt->contractor_id) }}">
+                            {{ $receipt->contractor->name ?? '-' }}
+                        </a>
+                    </td>
                     <td>{{ number_format($receipt->total_amount, 2) }}</td>
                     <td>{{ number_format($receipt->total_vat, 2) }}</td>
                     <td>
