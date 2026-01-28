@@ -80,13 +80,13 @@
                                 @endforeach
                             </select>
                         </td>
-                        <td class="item-amount">{{ $item['amount'] ?? 0 }}</td>
-                        <td class="item-vat-amount">{{ $item['vat_amount'] ?? 0 }}</td>
-                        <td class="item-total">{{ $item['total_amount'] ?? 0 }}</td>
+                        <td class="item-amount align-middle">{{ $item['amount'] ?? 0 }}</td>
+                        <td class="item-vat-amount align-middle">{{ $item['vat_amount'] ?? 0 }}</td>
+                        <td class="item-total align-middle">{{ $item['total_amount'] ?? 0 }}</td>
                         <input type="hidden" name="items[{{ $index }}][amount]" class="item-amount-input" value="{{ $item['amount'] ?? 0 }}">
                         <input type="hidden" name="items[{{ $index }}][vat_amount]" class="item-vat-amount-input" value="{{ $item['vat_amount'] ?? 0 }}">
                         <input type="hidden" name="items[{{ $index }}][total_amount]" class="item-total-input" value="{{ $item['total_amount'] ?? 0 }}">
-                        <td><button type="button" class="btn btn-danger btn-sm remove-item">×</button></td>
+                        <td class="align-middle"><button type="button" class="btn btn-danger btn-sm remove-item">×</button></td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -108,17 +108,28 @@
 
             function recalcRow(row) {
                 const qty = parseFloat(row.querySelector('.item-quantity').value) || 0;
-                const price = parseFloat(row.querySelector('.item-price').value) || 0;
-                const amount = qty * price;
-                const vatRate = parseFloat(row.querySelector('.item-vat').selectedOptions[0].dataset.rate) || 0;
-                const vatAmount = amount * vatRate / 100;
-                const total = amount + vatAmount;
+                const priceWithVat = parseFloat(row.querySelector('.item-price').value) || 0;
+
+                const vatRate = parseFloat(
+                    row.querySelector('.item-vat').selectedOptions[0].dataset.rate
+                ) || 0;
+
+                // Общая сумма (уже с НДС)
+                const total = qty * priceWithVat;
+
+                // НДС "внутри" суммы
+                const vatAmount = vatRate > 0
+                    ? total - (total / (1 + vatRate / 100))
+                    : 0;
+
+                // Сумма без НДС
+                const amount = total - vatAmount;
 
                 row.querySelector('.item-amount').textContent = amount.toFixed(2);
                 row.querySelector('.item-vat-amount').textContent = vatAmount.toFixed(2);
                 row.querySelector('.item-total').textContent = total.toFixed(2);
 
-                // 🔥 ВАЖНО — именно это сохраняется в БД
+                // сохраняем в БД
                 row.querySelector('.item-amount-input').value = amount.toFixed(2);
                 row.querySelector('.item-vat-amount-input').value = vatAmount.toFixed(2);
                 row.querySelector('.item-total-input').value = total.toFixed(2);
@@ -137,13 +148,13 @@
                     @endforeach
                 </select>
             </td>
-            <td class="item-amount">0.00</td>
-            <td class="item-vat-amount">0.00</td>
-            <td class="item-total">0.00</td>
+            <td class="item-amount align-middle">0.00</td>
+            <td class="item-vat-amount align-middle">0.00</td>
+            <td class="item-total align-middle">0.00</td>
             <input type="hidden" name="items[${index}][amount]" class="item-amount-input">
             <input type="hidden" name="items[${index}][vat_amount]" class="item-vat-amount-input">
             <input type="hidden" name="items[${index}][total_amount]" class="item-total-input">
-            <td><button type="button" class="btn btn-danger btn-sm remove-item">×</button></td>
+            <td class="align-middle"><button type="button" class="btn btn-danger btn-sm remove-item">×</button></td>
         `;
                 table.appendChild(row);
                 index++;
