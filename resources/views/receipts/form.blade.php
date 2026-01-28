@@ -53,8 +53,8 @@
             </div>
 
             <h5 class="mt-4">Строки поступления</h5>
-            <table class="table table-bordered" id="itemsTable">
-                <thead class="table-light">
+            <table class="table table-striped" id="itemsTable">
+                <thead>
                 <tr>
                     <th>Наименование</th>
                     <th>Кол-во</th>
