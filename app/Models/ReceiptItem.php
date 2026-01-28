@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ReceiptItem extends Model
 {
-    use SoftDeletes;
-
     protected $fillable = [
         'receipt_id',
         'name',
