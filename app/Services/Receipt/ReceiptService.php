@@ -39,9 +39,10 @@ readonly class ReceiptService
     {
         return DB::transaction(function () use ($receipt, $dto) {
 
-            $totals = $this->calculator->calculateTotals($dto->items);
+            // 🔥 ЕДИНСТВЕННЫЙ расчет
+            $calculated = $this->calculator->calculate($dto->items);
 
-            // Сохраняем шапку
+            // Шапка
             $receipt->fill([
                 'date' => $dto->date,
                 'number' => $dto->number,
@@ -51,26 +52,25 @@ readonly class ReceiptService
                 'document_date' => $dto->document_date,
                 'note' => $dto->note,
                 'status' => $dto->status,
-                'total_amount' => $totals['total_amount'],
-                'total_vat' => $totals['total_vat'],
+                'total_amount' => $calculated->totalAmount,
+                'total_vat' => $calculated->totalVat,
             ])->save();
 
-            // Удаляем старые строки (если это update)
+            // строки при update
             if ($receipt->exists) {
                 $receipt->items()->delete();
             }
 
-            // Создаем строки
-            foreach ($dto->items as $item) {
-                $row = $this->calculator->calculateItem($item);
+            // строки
+            foreach ($calculated->items as $item) {
                 $receipt->items()->create([
                     'name' => $item->name,
                     'quantity' => $item->quantity,
                     'price' => $item->price,
                     'vat_id' => $item->vat_id,
-                    'amount' => $row['amount'],
-                    'vat_amount' => $row['vat_amount'],
-                    'total_amount' => $row['total_amount'],
+                    'amount' => $item->amount,
+                    'vat_amount' => $item->vat_amount,
+                    'total_amount' => $item->total_amount,
                 ]);
             }
 
@@ -83,10 +83,6 @@ readonly class ReceiptService
      */
     public function delete(Receipt $receipt): void
     {
-        // Soft delete всех строк
-        $receipt->items()->delete();
-
-        // Soft delete шапки
         $receipt->delete();
     }
 
