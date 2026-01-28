@@ -54,10 +54,10 @@
                             ✏️
                         </a>
                         <form action="{{ route('receipts.destroy', $receipt) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('Вы уверены, что хотите удалить поступление?');">
+                              onsubmit="return confirm('Вы уверены, что хотите переместить поступление в архив?');">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                            <button type="submit" class="btn btn-sm btn-outline-warning">
                                 🗑
                             </button>
                         </form>
