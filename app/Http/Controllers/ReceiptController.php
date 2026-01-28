@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\Receipt\ReceiptDTO;
 use App\Models\Contractor;
 use App\Models\Vat;
 use App\Services\Receipt\ReceiptService;
@@ -57,10 +58,22 @@ class ReceiptController extends Controller
     public function store(
         ReceiptRequest $request)
     {
-        $this->service->create($request->validatedDTO());
+        // 1️⃣ Получаем ставки НДС ОДИН раз
+        $vatRates = Vat::query()
+            ->pluck('rate', 'id') // [id => rate]
+            ->toArray();
+
+        // 2️⃣ Создаем DTO
+        $dto = ReceiptDTO::fromRequest(
+            $request->validated(),
+            $vatRates
+        );
+
+        // 3️⃣ Передаем в сервис
+        $receipt = $this->service->create($dto);
 
         return redirect()
-            ->route('receipts.index')
+            ->route('receipts.show', $receipt)
             ->with('success', 'Поступление создано');
     }
 
@@ -78,7 +91,7 @@ class ReceiptController extends Controller
             'receipt' => $receipt,
             'breadcrumbs' => [
                 ['title' => 'Поступления', 'url' => route('receipts.index')],
-                ['title' => "Поступление №{$receipt->number}"],
+                ['title' => "Поступление №$receipt->number"],
             ],
         ]);
     }
@@ -107,7 +120,16 @@ class ReceiptController extends Controller
         ReceiptRequest $request,
         Receipt $receipt)
     {
-        $this->service->update($receipt, $request->validatedDTO());
+        $vatRates = Vat::query()
+            ->pluck('rate', 'id')
+            ->toArray();
+
+        $dto = ReceiptDTO::fromRequest(
+            $request->validated(),
+            $vatRates
+        );
+
+        $this->service->update($receipt, $dto);
 
         return redirect()
             ->route('receipts.show', $receipt)
