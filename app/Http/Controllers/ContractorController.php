@@ -68,8 +68,14 @@ class ContractorController extends Controller
     {
         $contractor->load('type', 'vat');
 
+        $receipts = $contractor->receipts()
+            ->latest('date')
+            ->limit(20) // чтобы не убить страницу
+            ->get();
+
         return view('contractors.show', [
             'contractor' => $contractor,
+            'receipts' => $receipts,
             'breadcrumbs' => [
                 ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'Контрагенты', 'url' => route('contractors.index')],
