@@ -8,6 +8,7 @@ use App\Models\Vat;
 use App\Services\Receipt\ReceiptService;
 use App\Http\Requests\ReceiptRequest;
 use App\Models\Receipt;
+use Illuminate\Http\Request;
 use Throwable;
 
 class ReceiptController extends Controller
@@ -38,10 +39,14 @@ class ReceiptController extends Controller
     /**
      * Форма создания
      */
-    public function create()
+    public function create(Request $request)
     {
+        $contractorId = $request->get('contractor_id');
+
         return view('receipts.form', [
-            'receipt' => new Receipt(),
+            'receipt' => new Receipt([
+                'contractor_id' => $contractorId,
+            ]),
             'contractors' => Contractor::orderBy('name')->get(),
             'vats'        => Vat::orderBy('rate')->get(),
             'breadcrumbs' => [
