@@ -21,7 +21,7 @@
     <ul class="nav nav-tabs" id="contractorTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button
-                class="nav-link active"
+                class="nav-link"
                 id="main-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#main"
@@ -47,6 +47,22 @@
 
         <li class="nav-item" role="presentation">
             <button
+                class="nav-link active"
+                id="receipts-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#receipts"
+                type="button"
+                role="tab"
+            >
+                Поступления
+                <span class="badge bg-secondary ms-1">
+            {{ $receipts->count() }}
+        </span>
+            </button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <button
                 class="nav-link"
                 id="relations-tab"
                 data-bs-toggle="tab"
@@ -62,73 +78,16 @@
     <div class="tab-content border border-top-0 p-3">
 
         {{-- Общая информация --}}
-        <div class="tab-pane fade show active" id="main" role="tabpanel">
-            <div class="row">
-                <div class="col-md-6">
-                    <dl class="row mb-0">
-                        <dt class="col-sm-4">Тип</dt>
-                        <dd class="col-sm-8">{{ $contractor->type->name }}</dd>
-
-                        <dt class="col-sm-4">Поставщик</dt>
-                        <dd class="col-sm-8">
-                            @if($contractor->is_supplier)
-                                <span class="badge bg-success">Да</span>
-                            @else
-                                <span class="text-muted">Нет</span>
-                            @endif
-                        </dd>
-
-                        <dt class="col-sm-4">Код</dt>
-                        <dd class="col-sm-8">{{ $contractor->code ?? '—' }}</dd>
-
-                        <dt class="col-sm-4">НДС</dt>
-                        <dd class="col-sm-8">{{ $contractor->vat?->name ?? 'Без НДС' }}</dd>
-
-                        <dt class="col-sm-4">Отсрочка</dt>
-                        <dd class="col-sm-8">{{ $contractor->delay }} дн.</dd>
-                    </dl>
-                </div>
-            </div>
-        </div>
+        @include('contractors.tabs.main')
 
         {{-- Реквизиты --}}
-        <div class="tab-pane fade" id="details" role="tabpanel">
-            <div class="row">
-                <div class="col-md-6">
-                    <dl class="row mb-0">
-                        <dt class="col-sm-4">ИНН</dt>
-                        <dd class="col-sm-8">{{ $contractor->inn ?? '—' }}</dd>
+        @include('contractors.tabs.details')
 
-                        <dt class="col-sm-4">КПП</dt>
-                        <dd class="col-sm-8">{{ $contractor->kpp ?? '—' }}</dd>
-
-                        <dt class="col-sm-4">Адрес</dt>
-                        <dd class="col-sm-8">{{ $contractor->address ?? '—' }}</dd>
-
-                        <dt class="col-sm-4">Телефон</dt>
-                        <dd class="col-sm-8">{{ $contractor->phone ?? '—' }}</dd>
-
-                        <dt class="col-sm-4">Email</dt>
-                        <dd class="col-sm-8">
-                            @if($contractor->email)
-                                <a href="mailto:{{ $contractor->email }}">
-                                    {{ $contractor->email }}
-                                </a>
-                            @else
-                                —
-                            @endif
-                        </dd>
-                    </dl>
-                </div>
-            </div>
-        </div>
+        {{-- Поступления --}}
+        @include('contractors.tabs.receipts')
 
         {{-- Связанные данные --}}
-        <div class="tab-pane fade" id="relations" role="tabpanel">
-            <div class="text-muted">
-                Здесь будут договоры, счета, платежи и документы контрагента.
-            </div>
-        </div>
+        @include('contractors.tabs.relations')
 
     </div>
 
