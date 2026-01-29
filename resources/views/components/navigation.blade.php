@@ -72,6 +72,14 @@
                                 Типы контрагентов
                             </a>
                         </li>
+                        <li>
+                            <a
+                                class="dropdown-item {{ $isActive('expense-items.*') }}"
+                                href="{{ route('expense-items.index') }}"
+                            >
+                                Статьи расходов
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
