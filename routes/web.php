@@ -24,13 +24,28 @@ Route::delete('contractors/{id}/force-delete', [Controllers\ContractorController
 Route::resource('contractors', Controllers\ContractorController::class);
 
 // Поступления
-Route::prefix('receipts')->group(function () {
-    Route::get('/archive', [Controllers\ReceiptController::class, 'archive'])
-        ->name('receipts.archive');
-    Route::post('/{id}/restore', [Controllers\ReceiptController::class, 'restore'])
-        ->name('receipts.restore');
-    Route::delete('/{id}/force-delete', [Controllers\ReceiptController::class, 'forceDelete'])
-        ->name('receipts.forceDelete');
+Route::prefix('receipts')
+    ->name('receipts.')
+    ->controller(Controllers\ReceiptController::class)
+    ->group(function () {
+        Route::get('archive', 'archive')->name('archive');
+        Route::post('{id}/restore', 'restore')->name('restore');
+        Route::delete('{id}/force-delete', 'forceDelete')->name('forceDelete');
 });
 
 Route::resource('receipts', Controllers\ReceiptController::class);
+
+// Статьи расхода
+Route::prefix('expense-items')
+    ->name('expense-items.')
+    ->controller(Controllers\ExpenseItemController::class)
+    ->group(function () {
+
+        Route::get('archive', 'archive')->name('archive');
+        Route::post('{id}/restore', 'restore')->name('restore');
+        Route::delete('{id}/force', 'forceDelete')->name('force');
+
+    });
+
+Route::resource('expense-items', Controllers\ExpenseItemController::class)
+    ->except('show');
