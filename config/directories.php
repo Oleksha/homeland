@@ -29,4 +29,13 @@ return [
         'soft_delete' => true,
     ],
 
+    'expense-items' => [
+        'title' => 'Статьи расхода',
+        'description' => 'Справочник статей для учета затрат и формирования отчетов.',
+        'route' => 'expense-items.index',
+        'model' => \App\Models\ExpenseItem::class,
+        'icon' => 'bi bi-wallet2',
+        'soft_delete' => true,
+    ],
+
 ];
