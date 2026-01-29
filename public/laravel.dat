@@ -1,0 +1,610 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Хост: 127.0.0.1:3306
+-- Время создания: Янв 29 2026 г., 12:50
+-- Версия сервера: 10.4.26-MariaDB-log
+-- Версия PHP: 8.3.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- База данных: `laravel`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `cache`
+--
+
+CREATE TABLE `cache` (
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `cache_locks`
+--
+
+CREATE TABLE `cache_locks` (
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `contractors`
+--
+
+CREATE TABLE `contractors` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type_id` bigint(20) UNSIGNED NOT NULL,
+  `is_supplier` tinyint(1) NOT NULL DEFAULT 0,
+  `inn` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kpp` varchar(9) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `delay` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `vat_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `contractors`
+--
+
+INSERT INTO `contractors` (`id`, `name`, `code`, `type_id`, `is_supplier`, `inn`, `kpp`, `address`, `phone`, `email`, `delay`, `vat_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Тандер АО', '000000068', 1, 1, '2310031475', '997350001', '350002, Краснодарский край, Краснодар г, им Леваневского ул, дом № 185', '+7(861)2109810', NULL, 10, 2, '2026-01-23 05:34:55', '2026-01-23 05:34:55', NULL),
+(2, 'Неизвестный Александр Алексеевич ИП', 'CNT002339', 2, 1, '632412383560', NULL, '445047, Самарская обл, Тольятти г, Южное ш, дом 45, квартира 39', NULL, 'a.neizvestnyy1989@mail.ru', 14, 1, '2026-01-23 05:58:46', '2026-01-23 06:46:41', NULL),
+(3, 'АКИМОВ ВАДИМ АНАТОЛЬЕВИЧ', 'TOF0000005', 3, 1, '632106553420', NULL, '445044, Самарская обл, Тольятти г, Космонавтов б-р, дом № 18, кв. 21', NULL, NULL, 5, 1, '2026-01-23 06:50:03', '2026-01-29 06:37:15', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `contractor_types`
+--
+
+CREATE TABLE `contractor_types` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `contractor_types`
+--
+
+INSERT INTO `contractor_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Юридическое лицо', '2026-01-22 08:30:26', '2026-01-22 08:32:09'),
+(2, 'Индивидуальный предприниматель', '2026-01-22 08:30:54', '2026-01-22 08:30:54'),
+(3, 'Физическое лицо', '2026-01-22 08:31:17', '2026-01-22 08:31:17');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `expense_items`
+--
+
+CREATE TABLE `expense_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_report_selection` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `expense_items`
+--
+
+INSERT INTO `expense_items` (`id`, `name`, `is_report_selection`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'СП Аренда зданий и помещений', 1, '2026-01-29 03:58:26', '2026-01-29 04:38:06', NULL),
+(2, 'СП Аутстаффинг ПР', 1, '2026-01-29 04:13:19', '2026-01-29 04:38:17', NULL),
+(3, 'СП Вахта ПР', 1, '2026-01-29 04:38:55', '2026-01-29 04:38:55', NULL),
+(4, 'СП Водоснабжение и водоотведение ПР', 0, '2026-01-29 04:39:12', '2026-01-29 04:39:12', NULL),
+(5, 'СП Вывоз и утилизация отходов ПР', 1, '2026-01-29 04:39:28', '2026-01-29 04:39:28', NULL),
+(6, 'СП ГСМ', 1, '2026-01-29 04:39:48', '2026-01-29 04:39:48', NULL),
+(7, 'СП Доставка СП до РЦ ПР', 0, '2026-01-29 04:40:03', '2026-01-29 04:40:03', NULL),
+(8, 'СП Запасные части и комплектующие ПР', 1, '2026-01-29 04:40:20', '2026-01-29 04:40:20', NULL),
+(9, 'СП Инструмент и инвентарь ПР', 1, '2026-01-29 04:40:34', '2026-01-29 04:40:34', NULL),
+(10, 'СП Коммунальные услуги прочие ПР', 1, '2026-01-29 04:40:48', '2026-01-29 04:40:48', NULL),
+(11, 'СП Лабораторные исследования и сертификация ПР', 1, '2026-01-29 04:41:14', '2026-01-29 04:41:14', NULL),
+(12, 'СП Налог на землю', 0, '2026-01-29 05:10:20', '2026-01-29 05:10:20', NULL),
+(13, 'СП Налоги и взносы, связанные с расходами на оплату труда', 0, '2026-01-29 05:11:10', '2026-01-29 05:11:10', NULL),
+(14, 'СП Оплата труда - постоянная часть', 0, '2026-01-29 05:11:27', '2026-01-29 05:11:27', NULL),
+(15, 'СП Оплата труда ОПР', 0, '2026-01-29 05:11:42', '2026-01-29 05:11:42', NULL),
+(16, 'СП Оплата труда ПР', 0, '2026-01-29 05:11:54', '2026-01-29 05:11:54', NULL),
+(17, 'СП Отчисления с ФОТ ПР', 0, '2026-01-29 05:12:07', '2026-01-29 05:12:07', NULL),
+(18, 'СП Офисные и канцелярские расходные материалы', 1, '2026-01-29 05:13:19', '2026-01-29 05:13:19', NULL),
+(19, 'СП Программы производственного контроля', 1, '2026-01-29 05:13:31', '2026-01-29 05:13:31', NULL),
+(20, 'СП Расходы на обязательное медобслуживание ПР', 1, '2026-01-29 05:13:45', '2026-01-29 05:13:45', NULL),
+(21, 'СП Расходы на охрану', 1, '2026-01-29 05:14:00', '2026-01-29 05:14:00', NULL),
+(22, 'СП Ремонт и ТО помещений, зданий, территории ПР', 1, '2026-01-29 05:14:18', '2026-01-29 05:14:18', NULL),
+(23, 'СП Спецодежда и СИЗ ПР', 1, '2026-01-29 05:14:58', '2026-01-29 05:14:58', NULL),
+(24, 'СП Сырье ПР', 0, '2026-01-29 05:15:25', '2026-01-29 05:15:25', NULL),
+(25, 'СП Текущий ремонт и ТО технологического оборудования ПР', 1, '2026-01-29 05:15:49', '2026-01-29 05:15:49', NULL),
+(26, 'СП Теплоснабжение ПР', 0, '2026-01-29 05:16:10', '2026-01-29 05:16:10', NULL),
+(27, 'СП Упаковка ПР', 0, '2026-01-29 05:16:23', '2026-01-29 05:16:23', NULL),
+(28, 'СП Услуги связи', 1, '2026-01-29 05:16:38', '2026-01-29 05:16:38', NULL),
+(29, 'СП Хозяйственный и прочие расходные материалы', 1, '2026-01-29 05:16:49', '2026-01-29 05:16:49', NULL),
+(30, 'СП Электроэнергия ПР', 0, '2026-01-29 05:17:02', '2026-01-29 05:17:02', NULL),
+(31, 'Инв.Оборудование', 1, '2026-01-29 05:17:30', '2026-01-29 05:48:20', NULL),
+(32, 'СП Расходы по подбору персонала', 1, '2026-01-29 05:17:50', '2026-01-29 05:17:50', NULL),
+(33, 'СП Расходы на обучение ПР', 1, '2026-01-29 05:18:05', '2026-01-29 05:18:05', NULL),
+(34, 'Инв.Капитaльные ремонты', 1, '2026-01-29 05:18:29', '2026-01-29 05:41:49', NULL),
+(35, 'СП Ремонт/ТО ИТ оборудования', 1, '2026-01-29 05:18:47', '2026-01-29 05:18:47', NULL),
+(36, 'СП Стирка спецодежды ПР', 1, '2026-01-29 05:20:01', '2026-01-29 05:20:01', NULL),
+(37, 'СП Прочие расходы на персонал ПР', 1, '2026-01-29 05:20:22', '2026-01-29 05:20:22', NULL),
+(38, 'СП Услуги страхования ПР', 1, '2026-01-29 05:20:36', '2026-01-29 05:20:36', NULL),
+(39, 'СП Информационные и консультационные услуги', 1, '2026-01-29 05:20:51', '2026-01-29 05:20:51', NULL),
+(40, 'СП Ремонт и ТО прочего оборудования ПР', 1, '2026-01-29 05:21:04', '2026-01-29 05:21:04', NULL),
+(41, 'СП Налог на экологию', 0, '2026-01-29 05:21:15', '2026-01-29 05:21:15', NULL),
+(42, 'СП Ремонт и ТО инженерной инфраструктуры ПР', 1, '2026-01-29 05:21:27', '2026-01-29 05:21:27', NULL),
+(43, 'СП Налог на имущество', 0, '2026-01-29 05:21:37', '2026-01-29 05:21:37', NULL),
+(44, 'СП Отчисления с ФОТ ОПР', 0, '2026-01-29 05:21:49', '2026-01-29 05:21:49', NULL),
+(45, 'СП Реактивы ПР', 1, '2026-01-29 05:22:14', '2026-01-29 05:22:14', NULL),
+(46, 'СП Теплоснабжение', 0, '2026-01-29 05:22:28', '2026-01-29 05:22:28', NULL),
+(47, 'Инв.Приобретение зданий и сооружений', 1, '2026-01-29 05:22:43', '2026-01-29 05:22:43', NULL),
+(48, 'СП Командировочные расходы', 1, '2026-01-29 05:22:59', '2026-01-29 05:22:59', NULL),
+(49, 'СП Расходы по подбору персонала ПР', 1, '2026-01-29 05:23:11', '2026-01-29 05:23:11', NULL),
+(50, 'Инв.Общехозяйственные материалы', 1, '2026-01-29 05:23:28', '2026-01-29 05:23:28', NULL),
+(51, 'СП Ремонтные работы/ТО по зданиям/помещениям/коммуникациям', 0, '2026-01-29 05:23:52', '2026-01-29 05:23:52', NULL),
+(52, 'СП Ремонт/ТО ИТ оборудования ПР', 1, '2026-01-29 05:24:14', '2026-01-29 05:24:14', NULL),
+(53, 'СП Прочие общехозяйственные расходы', 1, '2026-01-29 05:24:25', '2026-01-29 05:24:25', NULL),
+(54, 'СП Расходные материалы производственные ПР', 1, '2026-01-29 05:24:37', '2026-01-29 05:24:37', NULL),
+(55, 'СП Инженерная документация', 1, '2026-01-29 05:24:52', '2026-01-29 05:24:52', NULL),
+(56, 'СП Информационные и консультационные услуги ПР', 1, '2026-01-29 05:25:06', '2026-01-29 05:25:06', NULL),
+(57, 'СП Прочие расходы ПР', 1, '2026-01-29 05:25:17', '2026-01-29 05:25:17', NULL),
+(58, 'СП Расходы на страхование', 1, '2026-01-29 05:25:31', '2026-01-29 05:25:31', NULL),
+(59, 'Инв.Разрешительная документация', 1, '2026-01-29 05:25:42', '2026-01-29 05:25:42', NULL),
+(60, 'СП Вывоз мусора и сан.обработка', 1, '2026-01-29 05:25:55', '2026-01-29 05:25:55', NULL),
+(61, 'СП Инструмент\\Инвентарь', 1, '2026-01-29 05:26:12', '2026-01-29 05:26:12', NULL),
+(62, 'СП Ремонт/ТО прочего оборудования', 1, '2026-01-29 05:26:50', '2026-01-29 05:26:50', NULL),
+(63, 'СП Разрешительная и торговая документация', 1, '2026-01-29 05:27:15', '2026-01-29 05:27:15', NULL),
+(64, 'СП Транспортировка МЦ (кроме товара)', 0, '2026-01-29 05:27:30', '2026-01-29 05:27:30', NULL),
+(65, 'СП Командировочные ПР', 1, '2026-01-29 05:28:02', '2026-01-29 05:28:02', NULL),
+(66, 'СП Расходы на обязательное обучение', 1, '2026-01-29 05:28:15', '2026-01-29 05:28:15', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `failed_jobs`
+--
+
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` tinyint(3) UNSIGNED NOT NULL,
+  `reserved_at` int(10) UNSIGNED DEFAULT NULL,
+  `available_at` int(10) UNSIGNED NOT NULL,
+  `created_at` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `job_batches`
+--
+
+CREATE TABLE `job_batches` (
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total_jobs` int(11) NOT NULL,
+  `pending_jobs` int(11) NOT NULL,
+  `failed_jobs` int(11) NOT NULL,
+  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cancelled_at` int(11) DEFAULT NULL,
+  `created_at` int(11) NOT NULL,
+  `finished_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '0001_01_01_000000_create_users_table', 1),
+(2, '0001_01_01_000001_create_cache_table', 1),
+(3, '0001_01_01_000002_create_jobs_table', 1),
+(4, '2026_01_21_071549_create_vats_table', 1),
+(5, '2026_01_22_110029_create_contractor_types_table', 2),
+(6, '2026_01_23_074146_create_contractors_table', 3),
+(7, '2026_01_23_091225_add_deleted_at_to_contractors_table', 4),
+(8, '2026_01_26_114658_create_receipts_table', 5),
+(9, '2026_01_26_114717_create_receipt_items_table', 5),
+(10, '2026_01_27_092624_add_soft_deletes_to_receipts_and_items', 6),
+(11, '2026_01_28_072620_remove_deleted_at_from_receipt_items', 7),
+(12, '2026_01_29_053215_create_expense_items_table', 8);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `password_reset_tokens`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `receipts`
+--
+
+CREATE TABLE `receipts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` tinyint(4) NOT NULL,
+  `contractor_id` bigint(20) UNSIGNED NOT NULL,
+  `document_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `document_date` date DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `total_amount` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `total_vat` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `receipts`
+--
+
+INSERT INTO `receipts` (`id`, `date`, `number`, `type`, `contractor_id`, `document_number`, `document_date`, `note`, `status`, `total_amount`, `total_vat`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, '2025-12-16', 'TOF00001341', 1, 2, '323', '2025-12-16', 'Без НДС', 1, '240000.00', '20000.00', '2026-01-27 02:57:22', '2026-01-28 03:35:44', NULL),
+(4, '2026-01-28', 'TTF00099091', 1, 2, '12', '2026-01-28', NULL, 1, '100.00', '0.00', '2026-01-28 06:00:26', '2026-01-28 08:09:29', '2026-01-28 08:09:29');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `receipt_items`
+--
+
+CREATE TABLE `receipt_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `receipt_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` decimal(15,3) NOT NULL,
+  `price` decimal(15,2) NOT NULL,
+  `amount` decimal(15,2) NOT NULL,
+  `vat_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `vat_amount` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `total_amount` decimal(15,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `receipt_items`
+--
+
+INSERT INTO `receipt_items` (`id`, `receipt_id`, `name`, `quantity`, `price`, `amount`, `vat_id`, `vat_amount`, `total_amount`, `created_at`, `updated_at`) VALUES
+(33, 1, 'Товар', '1.000', '120000.00', '120000.00', 1, '0.00', '120000.00', '2026-01-28 03:35:44', '2026-01-28 03:35:44'),
+(34, 1, 'услуга', '1.000', '120000.00', '100000.00', 3, '20000.00', '120000.00', '2026-01-28 03:35:44', '2026-01-28 03:35:44'),
+(37, 4, 'Товар', '1.000', '100.00', '100.00', 1, '0.00', '100.00', '2026-01-28 06:00:26', '2026-01-28 06:00:26');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_activity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `sessions`
+--
+
+INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
+('GR3qaFqji4TButyQUezHnVxvn0h2cwBWnSvoEU4z', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUTg0cXNXMnEyamlZZFJmTWIzNzdSaGxJYWFBSzdjVzh4RTlDTHFvNiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9leHBlbnNlLWl0ZW1zIjtzOjU6InJvdXRlIjtzOjE5OiJleHBlbnNlLWl0ZW1zLmluZGV4Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1769679750);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `vats`
+--
+
+CREATE TABLE `vats` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rate` decimal(5,2) NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `is_default` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `vats`
+--
+
+INSERT INTO `vats` (`id`, `name`, `rate`, `code`, `is_active`, `is_default`, `created_at`, `updated_at`) VALUES
+(1, 'Без НДС', '0.00', 'no_vat', 1, 0, '2026-01-22 03:53:43', '2026-01-22 03:53:43'),
+(2, '22%', '22.00', '22_vat', 1, 1, '2026-01-22 03:54:12', '2026-01-22 03:55:51'),
+(3, '20%', '20.00', '20_vat', 1, 0, '2026-01-22 03:54:40', '2026-01-22 03:54:40'),
+(4, '10%', '10.00', '10_vat', 1, 0, '2026-01-22 03:54:54', '2026-01-22 03:54:54'),
+(5, '7%', '7.00', '7_vat', 1, 0, '2026-01-22 03:55:11', '2026-01-22 03:55:11'),
+(8, '5%', '5.00', '5_vat', 1, 0, '2026-01-22 04:02:44', '2026-01-22 04:02:44');
+
+--
+-- Индексы сохранённых таблиц
+--
+
+--
+-- Индексы таблицы `cache`
+--
+ALTER TABLE `cache`
+  ADD PRIMARY KEY (`key`);
+
+--
+-- Индексы таблицы `cache_locks`
+--
+ALTER TABLE `cache_locks`
+  ADD PRIMARY KEY (`key`);
+
+--
+-- Индексы таблицы `contractors`
+--
+ALTER TABLE `contractors`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `contractors_code_unique` (`code`),
+  ADD KEY `contractors_type_id_foreign` (`type_id`),
+  ADD KEY `contractors_vat_id_foreign` (`vat_id`);
+
+--
+-- Индексы таблицы `contractor_types`
+--
+ALTER TABLE `contractor_types`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `contractor_types_name_unique` (`name`);
+
+--
+-- Индексы таблицы `expense_items`
+--
+ALTER TABLE `expense_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `expense_items_is_report_selection_index` (`is_report_selection`);
+
+--
+-- Индексы таблицы `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Индексы таблицы `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `jobs_queue_index` (`queue`);
+
+--
+-- Индексы таблицы `job_batches`
+--
+ALTER TABLE `job_batches`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  ADD PRIMARY KEY (`email`);
+
+--
+-- Индексы таблицы `receipts`
+--
+ALTER TABLE `receipts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `receipts_contractor_id_foreign` (`contractor_id`);
+
+--
+-- Индексы таблицы `receipt_items`
+--
+ALTER TABLE `receipt_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `receipt_items_receipt_id_foreign` (`receipt_id`),
+  ADD KEY `receipt_items_vat_id_foreign` (`vat_id`);
+
+--
+-- Индексы таблицы `sessions`
+--
+ALTER TABLE `sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sessions_user_id_index` (`user_id`),
+  ADD KEY `sessions_last_activity_index` (`last_activity`);
+
+--
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- Индексы таблицы `vats`
+--
+ALTER TABLE `vats`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `vats_code_unique` (`code`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
+--
+
+--
+-- AUTO_INCREMENT для таблицы `contractors`
+--
+ALTER TABLE `contractors`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT для таблицы `contractor_types`
+--
+ALTER TABLE `contractor_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT для таблицы `expense_items`
+--
+ALTER TABLE `expense_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+--
+-- AUTO_INCREMENT для таблицы `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT для таблицы `receipts`
+--
+ALTER TABLE `receipts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT для таблицы `receipt_items`
+--
+ALTER TABLE `receipt_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `vats`
+--
+ALTER TABLE `vats`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `contractors`
+--
+ALTER TABLE `contractors`
+  ADD CONSTRAINT `contractors_type_id_foreign` FOREIGN KEY (`type_id`) REFERENCES `contractor_types` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `contractors_vat_id_foreign` FOREIGN KEY (`vat_id`) REFERENCES `vats` (`id`) ON DELETE SET NULL;
+
+--
+-- Ограничения внешнего ключа таблицы `receipts`
+--
+ALTER TABLE `receipts`
+  ADD CONSTRAINT `receipts_contractor_id_foreign` FOREIGN KEY (`contractor_id`) REFERENCES `contractors` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `receipt_items`
+--
+ALTER TABLE `receipt_items`
+  ADD CONSTRAINT `receipt_items_receipt_id_foreign` FOREIGN KEY (`receipt_id`) REFERENCES `receipts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `receipt_items_vat_id_foreign` FOREIGN KEY (`vat_id`) REFERENCES `vats` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
