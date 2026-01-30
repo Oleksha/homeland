@@ -8,7 +8,6 @@ use App\Domains\ContractorType\Actions\UpdateContractorType;
 use App\Domains\ContractorType\DTO\ContractorTypeData;
 use App\Domains\ContractorType\Models\ContractorType;
 use App\Http\Requests\ContractorTypeRequest;
-use App\Services\ContractorType\ContractorTypeService;
 
 class ContractorTypeController extends Controller
 {
