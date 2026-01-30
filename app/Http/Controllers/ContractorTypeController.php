@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Contractor\DTO\ContractorTypeData;
-use App\Domains\Contractor\Models\ContractorType;
+use App\Domains\ContractorType\DTO\ContractorTypeData;
+use App\Domains\ContractorType\Models\ContractorType;
 use App\Http\Requests\ContractorTypeRequest;
 use App\Services\ContractorType\ContractorTypeService;
 
