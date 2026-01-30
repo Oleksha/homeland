@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\Receipt\ReceiptDTO;
-use App\Models\Contractor;
-use App\Models\Vat;
-use App\Services\Receipt\ReceiptService;
+use App\Domains\Contractor\Models\Contractor;
+use App\Domains\Receipt\DTO\ReceiptDTO;
+use App\Domains\Receipt\Models\Receipt;
+use App\Domains\Vat\Models\Vat;
 use App\Http\Requests\ReceiptRequest;
-use App\Models\Receipt;
+use App\Services\Receipt\ReceiptService;
 use Illuminate\Http\Request;
 use Throwable;
 
