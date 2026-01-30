@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTO\Receipt;
+namespace App\Domains\Receipt\DTO;
 
-use App\Enums\ReceiptType;
+use App\Domains\Receipt\Enums\ReceiptType;
 use Carbon\Carbon;
 use InvalidArgumentException;
 
