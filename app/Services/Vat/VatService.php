@@ -2,15 +2,15 @@
 
 namespace App\Services\Vat;
 
-use App\DTO\Vat\VatData;
-use App\Models\Vat;
+use App\Domains\Vat\DTO\VatData;
+use App\Domains\Vat\Models\Vat;
 use Illuminate\Support\Facades\DB;
-use Throwable;
 use RuntimeException;
+use Throwable;
 
 class VatService
 {
-    public function getActive()
+    public function getActive(): Vat|array
     {
         return Vat::active()->orderBy('rate')->get();
     }
@@ -18,7 +18,7 @@ class VatService
     public function getDefault(): Vat
     {
         return Vat::default()->first()
-            ?? throw new \RuntimeException('Ставка НДС по умолчанию не определена.');
+            ?? throw new RuntimeException('Ставка НДС по умолчанию не определена.');
     }
 
     public function find(int $id): Vat
@@ -80,4 +80,3 @@ class VatService
         ], $data);
     }
 }
-
