@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\ExpenseItem;
+namespace App\Domains\ExpenseItem\DTO;
 
 final readonly class ExpenseItemDTO
 {
