@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\Contractor;
+namespace App\Domains\Contractor\DTO;
 
 class ContractorData
 {
