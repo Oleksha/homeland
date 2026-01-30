@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContractorType;
+use App\Domains\Contractor\DTO\ContractorTypeData;
+use App\Domains\Contractor\Models\ContractorType;
 use App\Http\Requests\ContractorTypeRequest;
 use App\Services\ContractorType\ContractorTypeService;
-use App\DTO\ContractorType\ContractorTypeData;
 
 class ContractorTypeController extends Controller
 {
