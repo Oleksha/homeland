@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Domains\Receipt\Models;
 
-use App\Enums\ReceiptType;
+use App\Domains\Contractor\Models\Contractor;
+use App\Domains\Receipt\Enums\ReceiptType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
