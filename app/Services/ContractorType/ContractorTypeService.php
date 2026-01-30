@@ -2,8 +2,8 @@
 
 namespace App\Services\ContractorType;
 
-use App\Domains\Contractor\DTO\ContractorTypeData;
-use App\Domains\Contractor\Models\ContractorType;
+use App\Domains\ContractorType\DTO\ContractorTypeData;
+use App\Domains\ContractorType\Models\ContractorType;
 
 class ContractorTypeService
 {
