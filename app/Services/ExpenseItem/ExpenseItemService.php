@@ -2,8 +2,8 @@
 
 namespace App\Services\ExpenseItem;
 
-use App\DTO\ExpenseItem\ExpenseItemDTO;
-use App\Models\ExpenseItem;
+use App\Domains\ExpenseItem\DTO\ExpenseItemDTO;
+use App\Domains\ExpenseItem\Models\ExpenseItem;
 
 readonly class ExpenseItemService
 {
