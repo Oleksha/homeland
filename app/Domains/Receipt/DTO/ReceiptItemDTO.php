@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\Receipt;
+namespace App\Domains\Receipt\DTO;
 
 final readonly class ReceiptItemDTO
 {
