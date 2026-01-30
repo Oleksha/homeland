@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Contractor\DTO;
+namespace App\Domains\ContractorType\DTO;
 
 readonly class ContractorTypeData
 {
