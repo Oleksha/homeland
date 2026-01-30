@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Receipt;
+namespace App\Domains\Receipt\Calculators;
 
-use App\DTO\Receipt\ReceiptItemDTO;
+use App\Domains\Receipt\DTO\ReceiptItemDTO;
 
 final class ReceiptCalculationResult
 {
