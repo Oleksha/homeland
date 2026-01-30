@@ -13,17 +13,20 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="date" class="form-label">Дата документа</label>
-                    <input type="date" name="date" id="date" class="form-control" value="{{ old('date', optional($receipt->date)->format('Y-m-d')) }}" required>
+                    <input type="date" name="date" id="date" class="form-control"
+                           value="{{ old('date', optional($receipt->date)->format('Y-m-d')) }}" required>
                 </div>
                 <div class="col-md-3">
                     <label for="number" class="form-label">Номер внутренний</label>
-                    <input type="text" name="number" id="number" class="form-control" value="{{ old('number', $receipt->number) }}" required>
+                    <input type="text" name="number" id="number" class="form-control"
+                           value="{{ old('number', $receipt->number) }}" required>
                 </div>
                 <div class="col-md-3">
                     <label for="type" class="form-label">Тип</label>
                     <select name="type" id="type" class="form-select" required>
-                        @foreach(\App\Enums\ReceiptType::options() as $value => $label)
-                            <option value="{{ $value }}" @selected(old('type', $receipt->type?->value) == $value)>{{ $label }}</option>
+                        @foreach(\App\Domains\Receipt\Enums\ReceiptType::options() as $value => $label)
+                            <option
+                                value="{{ $value }}" @selected(old('type', $receipt->type?->value) == $value)>{{ $label }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -31,7 +34,8 @@
                     <label for="contractor_id" class="form-label">Контрагент</label>
                     <select name="contractor_id" id="contractor_id" class="form-select" required>
                         @foreach($contractors as $contractor)
-                            <option value="{{ $contractor->id }}" @selected(old('contractor_id', $receipt->contractor_id) == $contractor->id)>{{ $contractor->name }}</option>
+                            <option
+                                value="{{ $contractor->id }}" @selected(old('contractor_id', $receipt->contractor_id) == $contractor->id)>{{ $contractor->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -40,15 +44,18 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="document_number" class="form-label">Входящий №</label>
-                    <input type="text" name="document_number" id="document_number" class="form-control" value="{{ old('document_number', $receipt->document_number) }}">
+                    <input type="text" name="document_number" id="document_number" class="form-control"
+                           value="{{ old('document_number', $receipt->document_number) }}">
                 </div>
                 <div class="col-md-3">
                     <label for="document_date" class="form-label">Входящая дата</label>
-                    <input type="date" name="document_date" id="document_date" class="form-control" value="{{ old('document_date', optional($receipt->document_date)->format('Y-m-d')) }}">
+                    <input type="date" name="document_date" id="document_date" class="form-control"
+                           value="{{ old('document_date', optional($receipt->document_date)->format('Y-m-d')) }}">
                 </div>
                 <div class="col-md-6">
                     <label for="note" class="form-label">Примечание</label>
-                    <input type="text" name="note" id="note" class="form-control" value="{{ old('note', $receipt->note) }}">
+                    <input type="text" name="note" id="note" class="form-control"
+                           value="{{ old('note', $receipt->note) }}">
                 </div>
             </div>
 
@@ -69,24 +76,34 @@
                 <tbody>
                 @foreach(old('items', $receipt->items ?? []) as $index => $item)
                     <tr>
-                        <td><input type="text" name="items[{{ $index }}][name]" class="form-control" value="{{ $item['name'] ?? '' }}" required></td>
-                        <td><input type="number" name="items[{{ $index }}][quantity]" class="form-control item-quantity" value="{{ $item['quantity'] ?? 1 }}" step="0.01" required></td>
-                        <td><input type="number" name="items[{{ $index }}][price]" class="form-control item-price" value="{{ $item['price'] ?? 0 }}" step="0.01" required></td>
+                        <td><input type="text" name="items[{{ $index }}][name]" class="form-control"
+                                   value="{{ $item['name'] ?? '' }}" required></td>
+                        <td><input type="number" name="items[{{ $index }}][quantity]" class="form-control item-quantity"
+                                   value="{{ $item['quantity'] ?? 1 }}" step="0.01" required></td>
+                        <td><input type="number" name="items[{{ $index }}][price]" class="form-control item-price"
+                                   value="{{ $item['price'] ?? 0 }}" step="0.01" required></td>
                         <td>
                             <select name="items[{{ $index }}][vat_id]" class="form-select item-vat" required>
                                 @foreach($vats as $vat)
-                                    <option value="{{ $vat->id }}" @selected(($item['vat_id'] ?? null) == $vat->id) data-rate="{{ $vat->rate }}"
-                                    >{{ $vat->name }} ({{ $vat->rate }}%)</option>
+                                    <option value="{{ $vat->id }}"
+                                            @selected(($item['vat_id'] ?? null) == $vat->id) data-rate="{{ $vat->rate }}"
+                                    >{{ $vat->name }} ({{ $vat->rate }}%)
+                                    </option>
                                 @endforeach
                             </select>
                         </td>
                         <td class="item-amount align-middle">{{ $item['amount'] ?? 0 }}</td>
                         <td class="item-vat-amount align-middle">{{ $item['vat_amount'] ?? 0 }}</td>
                         <td class="item-total align-middle">{{ $item['total_amount'] ?? 0 }}</td>
-                        <input type="hidden" name="items[{{ $index }}][amount]" class="item-amount-input" value="{{ $item['amount'] ?? 0 }}">
-                        <input type="hidden" name="items[{{ $index }}][vat_amount]" class="item-vat-amount-input" value="{{ $item['vat_amount'] ?? 0 }}">
-                        <input type="hidden" name="items[{{ $index }}][total_amount]" class="item-total-input" value="{{ $item['total_amount'] ?? 0 }}">
-                        <td class="align-middle"><button type="button" class="btn btn-danger btn-sm remove-item">×</button></td>
+                        <input type="hidden" name="items[{{ $index }}][amount]" class="item-amount-input"
+                               value="{{ $item['amount'] ?? 0 }}">
+                        <input type="hidden" name="items[{{ $index }}][vat_amount]" class="item-vat-amount-input"
+                               value="{{ $item['vat_amount'] ?? 0 }}">
+                        <input type="hidden" name="items[{{ $index }}][total_amount]" class="item-total-input"
+                               value="{{ $item['total_amount'] ?? 0 }}">
+                        <td class="align-middle">
+                            <button type="button" class="btn btn-danger btn-sm remove-item">×</button>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -102,7 +119,7 @@
 
 @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const table = document.getElementById('itemsTable').querySelector('tbody');
             let index = table.rows.length;
 
