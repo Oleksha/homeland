@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Contractor\Models;
+namespace App\Domains\ContractorType\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
