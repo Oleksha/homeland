@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Domains\Vat\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
