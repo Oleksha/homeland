@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Domains\Contractor\Models;
 
+use App\Domains\Receipt\Models\Receipt;
+use App\Domains\Vat\Models\Vat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
