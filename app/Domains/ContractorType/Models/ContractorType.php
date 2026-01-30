@@ -14,6 +14,6 @@ class ContractorType extends Model
 
     public function contractors(): HasMany
     {
-        return $this->hasMany(Contractor::class);
+        return $this->hasMany(Contractor::class, 'type_id');
     }
 }
