@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domains\Contractor\DTO\ContractorData;
 use App\Domains\Contractor\Models\Contractor;
-use App\Domains\Contractor\Models\ContractorType;
+use App\Domains\ContractorType\Models\ContractorType;
 use App\Domains\Vat\Models\Vat;
 use App\Http\Requests\ContractorRequest;
 use App\Services\Contractor\ContractorService;
