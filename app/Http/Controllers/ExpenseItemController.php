@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\ExpenseItem\Actions\CreateExpenseItem;
+use App\Domains\ExpenseItem\Actions\DeleteExpenseItem;
+use App\Domains\ExpenseItem\Actions\ForceDeleteExpenseItem;
+use App\Domains\ExpenseItem\Actions\RestoreExpenseItem;
+use App\Domains\ExpenseItem\Actions\UpdateExpenseItem;
 use App\Domains\ExpenseItem\DTO\ExpenseItemDTO;
 use App\Domains\ExpenseItem\Models\ExpenseItem;
 use App\Http\Requests\ExpenseItemRequest;
-use App\Services\ExpenseItem\ExpenseItemService;
 
 class ExpenseItemController extends Controller
 {
-    public function __construct(
-        private readonly ExpenseItemService $service
-    ) {}
-
     public function index()
     {
         $items = ExpenseItem::query()
@@ -29,9 +29,9 @@ class ExpenseItemController extends Controller
 
     public function store(ExpenseItemRequest $request)
     {
-        $dto = ExpenseItemDTO::fromRequest($request->validated());
-
-        $this->service->create($dto);
+        CreateExpenseItem::run(
+            ExpenseItemDTO::fromRequest($request->validated())
+        );
 
         return redirect()
             ->route('expense-items.index')
@@ -48,9 +48,10 @@ class ExpenseItemController extends Controller
 
     public function update(ExpenseItemRequest $request, ExpenseItem $expenseItem)
     {
-        $dto = ExpenseItemDTO::fromRequest($request->validated());
-
-        $this->service->update($expenseItem, $dto);
+        UpdateExpenseItem::run(
+            $expenseItem,
+            ExpenseItemDTO::fromRequest($request->validated())
+        );
 
         return redirect()
             ->route('expense-items.index')
@@ -59,7 +60,7 @@ class ExpenseItemController extends Controller
 
     public function destroy(ExpenseItem $expenseItem)
     {
-        $this->service->delete($expenseItem);
+        DeleteExpenseItem::run($expenseItem);
 
         return redirect()
             ->route('expense-items.index')
@@ -77,7 +78,7 @@ class ExpenseItemController extends Controller
 
     public function restore(int $id)
     {
-        $this->service->restore($id);
+        RestoreExpenseItem::run($id);
 
         return redirect()
             ->route('expense-items.archive')
@@ -86,7 +87,7 @@ class ExpenseItemController extends Controller
 
     public function forceDelete(int $id)
     {
-        $this->service->forceDelete($id);
+        ForceDeleteExpenseItem::run($id);
 
         return redirect()
             ->route('expense-items.archive')
