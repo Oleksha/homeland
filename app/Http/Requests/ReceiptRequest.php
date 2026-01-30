@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\DTO\Receipt\ReceiptDTO;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ReceiptRequest extends FormRequest
@@ -18,7 +18,7 @@ class ReceiptRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
@@ -38,11 +38,5 @@ class ReceiptRequest extends FormRequest
             'items.*.price' => ['required', 'numeric', 'min:0'],
             'items.*.vat_id' => ['required', 'exists:vats,id'],
         ];
-    }
-
-
-    public function validatedDTO(): ReceiptDTO
-    {
-        return ReceiptDTO::fromRequest($this->validated());
     }
 }
