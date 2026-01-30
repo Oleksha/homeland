@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\ContractorType\Actions\CreateContractorType;
+use App\Domains\ContractorType\Actions\DeleteContractorType;
+use App\Domains\ContractorType\Actions\UpdateContractorType;
 use App\Domains\ContractorType\DTO\ContractorTypeData;
 use App\Domains\ContractorType\Models\ContractorType;
 use App\Http\Requests\ContractorTypeRequest;
@@ -9,10 +12,6 @@ use App\Services\ContractorType\ContractorTypeService;
 
 class ContractorTypeController extends Controller
 {
-    public function __construct(
-        private readonly ContractorTypeService $service
-    ) {}
-
     public function index()
     {
         return view('contractor-types.index', [
@@ -38,7 +37,7 @@ class ContractorTypeController extends Controller
 
     public function store(ContractorTypeRequest $request)
     {
-        $this->service->store(
+        CreateContractorType::run(
             ContractorTypeData::fromArray($request->payload())
         );
 
@@ -63,7 +62,7 @@ class ContractorTypeController extends Controller
         ContractorTypeRequest $request,
         ContractorType $contractorType
     ) {
-        $this->service->update(
+        UpdateContractorType::run(
             $contractorType,
             ContractorTypeData::fromArray($request->payload())
         );
@@ -75,7 +74,7 @@ class ContractorTypeController extends Controller
 
     public function destroy(ContractorType $contractorType)
     {
-        $this->service->delete($contractorType);
+        DeleteContractorType::run($contractorType);
 
         return redirect()
             ->route('contractor-types.index')
