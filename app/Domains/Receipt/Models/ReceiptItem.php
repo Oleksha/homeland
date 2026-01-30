@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Domains\Receipt\Models;
 
+use App\Domains\Vat\Models\Vat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ReceiptItem extends Model
 {
