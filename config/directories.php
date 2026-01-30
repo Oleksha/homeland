@@ -16,7 +16,7 @@ return [
         'description' => 'Юридическое лицо, ИП, физическое лицо и др.',
         'icon' => 'people',
         'route' => 'contractor-types.index',
-        'model' => \App\Domains\Contractor\Models\ContractorType::class,
+        'model' => \App\Domains\ContractorType\Models\ContractorType::class,
         'soft_delete' => false,
     ],
 
