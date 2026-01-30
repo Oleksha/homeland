@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\ExpenseItem\ExpenseItemDTO;
+use App\Domains\ExpenseItem\DTO\ExpenseItemDTO;
+use App\Domains\ExpenseItem\Models\ExpenseItem;
 use App\Http\Requests\ExpenseItemRequest;
-use App\Models\ExpenseItem;
 use App\Services\ExpenseItem\ExpenseItemService;
 
 class ExpenseItemController extends Controller
