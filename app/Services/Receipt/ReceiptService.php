@@ -2,8 +2,9 @@
 
 namespace App\Services\Receipt;
 
-use App\DTO\Receipt\ReceiptDTO;
-use App\Models\Receipt;
+use App\Domains\Receipt\Calculators\ReceiptCalculator;
+use App\Domains\Receipt\DTO\ReceiptDTO;
+use App\Domains\Receipt\Models\Receipt;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
