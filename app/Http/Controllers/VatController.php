@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\Vat\VatData;
+use App\Domains\Vat\DTO\VatData;
+use App\Domains\Vat\Models\Vat;
 use App\Http\Requests\VatRequest;
-use App\Models\Vat;
 use App\Services\Vat\VatService;
 use Throwable;
 
