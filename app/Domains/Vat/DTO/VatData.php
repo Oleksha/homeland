@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\Vat;
+namespace App\Domains\Vat\DTO;
 
 readonly class VatData
 {
