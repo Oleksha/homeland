@@ -2,6 +2,7 @@
 
 namespace App\Domains\Contractor\Models;
 
+use App\Domains\ContractorType\Models\ContractorType;
 use App\Domains\Receipt\Models\Receipt;
 use App\Domains\Vat\Models\Vat;
 use Illuminate\Database\Eloquent\Model;
