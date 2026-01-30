@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\Contractor\ContractorData;
+use App\Domains\Contractor\DTO\ContractorData;
+use App\Domains\Contractor\Models\Contractor;
+use App\Domains\Contractor\Models\ContractorType;
+use App\Domains\Vat\Models\Vat;
 use App\Http\Requests\ContractorRequest;
-use App\Models\Contractor;
-use App\Models\ContractorType;
-use App\Models\Vat;
 use App\Services\Contractor\ContractorService;
 
 class ContractorController extends Controller
