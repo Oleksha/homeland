@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Contractor\Actions\CreateContractor;
+use App\Domains\Contractor\Actions\DeleteContractor;
+use App\Domains\Contractor\Actions\ForceDeleteContractor;
+use App\Domains\Contractor\Actions\RestoreContractor;
+use App\Domains\Contractor\Actions\UpdateContractor;
 use App\Domains\Contractor\DTO\ContractorData;
 use App\Domains\Contractor\Models\Contractor;
 use App\Domains\ContractorType\Models\ContractorType;
 use App\Domains\Vat\Models\Vat;
 use App\Http\Requests\ContractorRequest;
-use App\Services\Contractor\ContractorService;
 
 class ContractorController extends Controller
 {
@@ -54,10 +58,9 @@ class ContractorController extends Controller
     }
 
     public function store(
-        ContractorRequest $request,
-        ContractorService $service
+        ContractorRequest $request
     ) {
-        $service->store(ContractorData::fromArray($request->validated()));
+        CreateContractor::run(ContractorData::fromArray($request->validated()));
 
         return redirect()
             ->route('contractors.index')
@@ -100,11 +103,12 @@ class ContractorController extends Controller
 
     public function update(
         ContractorRequest $request,
-        Contractor $contractor,
-        ContractorService $service)
+        Contractor $contractor)
     {
-        $dto = ContractorData::fromArray($request->validated());
-        $service->update($contractor, $dto);
+        UpdateContractor::run(
+            $contractor,
+            ContractorData::fromArray($request->validated())
+        );
 
         return redirect()->route('contractors.index')
             ->with('success', 'Контрагент обновлён');
@@ -112,7 +116,7 @@ class ContractorController extends Controller
 
     public function destroy(Contractor $contractor)
     {
-        $contractor->delete();
+        DeleteContractor::run($contractor);
 
         return redirect()
             ->route('contractors.index')
@@ -121,8 +125,7 @@ class ContractorController extends Controller
 
     public function restore(int $id)
     {
-        $contractor = Contractor::onlyTrashed()->findOrFail($id);
-        $contractor->restore();
+        RestoreContractor::run($id);
 
         return redirect()
             ->route('contractors.archive')
@@ -131,12 +134,10 @@ class ContractorController extends Controller
 
     public function forceDelete(int $id)
     {
-        $contractor = Contractor::onlyTrashed()->findOrFail($id);
-        $contractor->forceDelete();
+        ForceDeleteContractor::run($id);
 
         return redirect()
             ->route('contractors.archive')
             ->with('success', 'Контрагент удалён навсегда');
     }
-
 }
