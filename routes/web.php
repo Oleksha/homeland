@@ -49,3 +49,17 @@ Route::prefix('expense-items')
 
 Route::resource('expense-items', Controllers\ExpenseItemController::class)
     ->except('show');
+
+// Бюджет
+Route::prefix('budgets')
+    ->name('budgets.')
+    ->controller(Controllers\BudgetController::class)
+    ->group(function () {
+
+        Route::get('archive', 'archive')->name('archive');
+        Route::post('{id}/restore', 'restore')->name('restore');
+        Route::delete('{id}/force', 'forceDelete')->name('force');
+
+    });
+
+Route::resource('budgets', Controllers\BudgetController::class);

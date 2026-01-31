@@ -25,6 +25,14 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a
+                        class="nav-link {{ request()->routeIs('budgets.*') ? 'active' : '' }}"
+                        href="{{ route('budgets.index') }}"
+                    >
+                        Бюджет
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a
                         class="nav-link {{ request()->routeIs('receipts.*') ? 'active' : '' }}"
                         href="{{ route('receipts.index') }}"
                     >
