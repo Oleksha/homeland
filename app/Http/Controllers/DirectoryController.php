@@ -8,7 +8,7 @@ class DirectoryController extends Controller
 {
     public function __invoke(DirectoryListService $service)
     {
-        return view('directories.index', [
+        return view('dictionaries.directories.index', [
             'directories' => $service->get(),
             'breadcrumbs' => [
                 ['title' => 'Справочники'],

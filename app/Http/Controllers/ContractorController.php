@@ -17,7 +17,7 @@ class ContractorController extends Controller
 {
     public function index()
     {
-        return view('contractors.index', [
+        return view('dictionaries.contractors.index', [
             'contractors' => Contractor::with(['type', 'vat'])
                 ->orderBy('name')
                 ->get(),
@@ -30,7 +30,7 @@ class ContractorController extends Controller
 
     public function archive()
     {
-        return view('contractors.archive', [
+        return view('dictionaries.contractors.archive', [
             'contractors' => Contractor::onlyTrashed()
                 ->with(['type', 'vat'])
                 ->orderBy('name')
@@ -45,7 +45,7 @@ class ContractorController extends Controller
 
     public function create()
     {
-        return view('contractors.form', [
+        return view('dictionaries.contractors.form', [
             'contractor' => new Contractor(),
             'types' => ContractorType::all(),
             'vats' => Vat::all(),
@@ -76,7 +76,7 @@ class ContractorController extends Controller
             ->limit(20) // чтобы не убить страницу
             ->get();
 
-        return view('contractors.show', [
+        return view('dictionaries.contractors.show', [
             'contractor' => $contractor,
             'receipts' => $receipts,
             'breadcrumbs' => [
@@ -89,7 +89,7 @@ class ContractorController extends Controller
 
     public function edit(Contractor $contractor)
     {
-        return view('contractors.form', [
+        return view('dictionaries.contractors.form', [
             'contractor' => $contractor,
             'types' => ContractorType::orderBy('name')->get(),
             'vats' => Vat::orderBy('rate')->get(),

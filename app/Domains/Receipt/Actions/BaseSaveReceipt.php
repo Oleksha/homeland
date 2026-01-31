@@ -1,42 +1,24 @@
 <?php
 
-namespace App\Services\Receipt;
+namespace App\Domains\Receipt\Actions;
 
 use App\Domains\Receipt\Calculators\ReceiptCalculator;
 use App\Domains\Receipt\DTO\ReceiptDTO;
 use App\Domains\Receipt\Models\Receipt;
+use App\Support\Action;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
-readonly class ReceiptService
+abstract class BaseSaveReceipt extends Action
 {
     public function __construct(
-        private ReceiptCalculator $calculator
+        protected ReceiptCalculator $calculator
     ) {}
 
     /**
-     * Создать поступление
      * @throws Throwable
      */
-    public function create(ReceiptDTO $dto): Receipt
-    {
-        return $this->save(new Receipt(), $dto);
-    }
-
-    /**
-     * Обновить поступление
-     * @throws Throwable
-     */
-    public function update(Receipt $receipt, ReceiptDTO $dto): Receipt
-    {
-        return $this->save($receipt, $dto);
-    }
-
-    /**
-     * Общий приватный метод сохранения
-     * @throws Throwable
-     */
-    private function save(Receipt $receipt, ReceiptDTO $dto): Receipt
+    protected function save(Receipt $receipt, ReceiptDTO $dto): Receipt
     {
         return DB::transaction(function () use ($receipt, $dto) {
 
@@ -57,12 +39,11 @@ readonly class ReceiptService
                 'total_vat' => $calculated->totalVat,
             ])->save();
 
-            // строки при update
+            // при update — пересоздаем строки
             if ($receipt->exists) {
                 $receipt->items()->delete();
             }
 
-            // строки
             foreach ($calculated->items as $item) {
                 $receipt->items()->create([
                     'name' => $item->name,
@@ -77,21 +58,5 @@ readonly class ReceiptService
 
             return $receipt;
         });
-    }
-
-    /**
-     * Удаление (soft delete)
-     */
-    public function delete(Receipt $receipt): void
-    {
-        $receipt->delete();
-    }
-
-    /**
-     * Восстановление записей
-     */
-    public function restore(Receipt $receipt): void
-    {
-        $receipt->restore();
     }
 }

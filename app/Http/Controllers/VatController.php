@@ -15,7 +15,7 @@ class VatController extends Controller
 {
     public function index()
     {
-        return view('vats.index', [
+        return view('dictionaries.vats.index', [
             'vats' => GetActiveVats::run(),
             'breadcrumbs' => [
                 ['title' => 'Справочники', 'url' => route('directories.index')],
@@ -26,7 +26,7 @@ class VatController extends Controller
 
     public function create()
     {
-        return view('vats.form', [
+        return view('dictionaries.vats.form', [
             'vat' => new Vat(),
             'breadcrumbs' => [
                 ['title' => 'Справочники', 'url' => route('directories.index')],
@@ -50,7 +50,7 @@ class VatController extends Controller
 
     public function edit(Vat $vat)
     {
-        return view('vats.form', [
+        return view('dictionaries.vats.form', [
             'vat' => $vat,
             'breadcrumbs' => [
                 ['title' => 'Справочники', 'url' => route('directories.index')],

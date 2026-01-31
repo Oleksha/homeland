@@ -13,7 +13,7 @@ class ContractorTypeController extends Controller
 {
     public function index()
     {
-        return view('contractor-types.index', [
+        return view('dictionaries.contractor-types.index', [
             'types' => ContractorType::orderBy('name')->get(),
             'breadcrumbs' => [
                 ['title' => 'Справочники', 'url' => route('directories.index')],
@@ -24,7 +24,7 @@ class ContractorTypeController extends Controller
 
     public function create()
     {
-        return view('contractor-types.form', [
+        return view('dictionaries.contractor-types.form', [
             'type' => new ContractorType(),
             'breadcrumbs' => [
                 ['title' => 'Справочники', 'url' => route('directories.index')],
@@ -47,7 +47,7 @@ class ContractorTypeController extends Controller
 
     public function edit(ContractorType $contractorType)
     {
-        return view('contractor-types.form', [
+        return view('dictionaries.contractor-types.form', [
             'type' => $contractorType,
             'breadcrumbs' => [
                 ['title' => 'Справочники', 'url' => route('directories.index')],

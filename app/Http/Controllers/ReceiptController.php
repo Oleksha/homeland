@@ -3,24 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Contractor\Models\Contractor;
+use App\Domains\Receipt\Actions\CreateReceipt;
+use App\Domains\Receipt\Actions\DeleteReceipt;
+use App\Domains\Receipt\Actions\ForceDeleteReceipt;
+use App\Domains\Receipt\Actions\RestoreReceipt;
+use App\Domains\Receipt\Actions\UpdateReceipt;
 use App\Domains\Receipt\DTO\ReceiptDTO;
 use App\Domains\Receipt\Models\Receipt;
 use App\Domains\Vat\Models\Vat;
 use App\Http\Requests\ReceiptRequest;
-use App\Services\Receipt\ReceiptService;
 use Illuminate\Http\Request;
 use Throwable;
 
 class ReceiptController extends Controller
 {
-    public function __construct(
-        private readonly ReceiptService $service,
-    )
-    {}
-
-    /**
-     * Список поступлений
-     */
     public function index()
     {
         $receipts = Receipt::query()
@@ -63,19 +59,19 @@ class ReceiptController extends Controller
     public function store(
         ReceiptRequest $request)
     {
-        // 1️⃣ Получаем ставки НДС ОДИН раз
+        // Получаем ставки НДС ОДИН раз
         $vatRates = Vat::query()
             ->pluck('rate', 'id') // [id => rate]
             ->toArray();
 
-        // 2️⃣ Создаем DTO
+        // Создаем DTO
         $dto = ReceiptDTO::fromRequest(
             $request->validated(),
             $vatRates
         );
 
-        // 3️⃣ Передаем в сервис
-        $receipt = $this->service->create($dto);
+        // Передаем в Action
+        $receipt = CreateReceipt::run($dto);
 
         return redirect()
             ->route('receipts.show', $receipt)
@@ -134,7 +130,7 @@ class ReceiptController extends Controller
             $vatRates
         );
 
-        $this->service->update($receipt, $dto);
+        UpdateReceipt::run($receipt, $dto);
 
         return redirect()
             ->route('receipts.show', $receipt)
@@ -146,7 +142,8 @@ class ReceiptController extends Controller
      */
     public function destroy(Receipt $receipt)
     {
-        $this->service->delete($receipt); // soft delete через сервис
+        DeleteReceipt::run($receipt);
+
         return redirect()
             ->route('receipts.index')
             ->with('success', 'Поступление перемещено в архив.');
@@ -173,8 +170,7 @@ class ReceiptController extends Controller
      */
     public function restore(int $id)
     {
-        $receipt = Receipt::withTrashed()->findOrFail($id);
-        $this->service->restore($receipt);
+        RestoreReceipt::run($id);
 
         return redirect()
             ->route('receipts.index')
@@ -186,7 +182,7 @@ class ReceiptController extends Controller
      */
     public function forceDelete(int $id)
     {
-        Receipt::withTrashed()->findOrFail($id)->forceDelete();
+        ForceDeleteReceipt::run($id);
 
         return redirect()
             ->route('receipts.archive')

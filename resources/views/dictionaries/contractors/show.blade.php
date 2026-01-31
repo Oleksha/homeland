@@ -21,12 +21,12 @@
     <ul class="nav nav-tabs" id="contractorTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button
-                class="nav-link"
-                id="main-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#main"
-                type="button"
-                role="tab"
+                    class="nav-link"
+                    id="main-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#main"
+                    type="button"
+                    role="tab"
             >
                 Общая информация
             </button>
@@ -34,12 +34,12 @@
 
         <li class="nav-item" role="presentation">
             <button
-                class="nav-link"
-                id="details-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#details"
-                type="button"
-                role="tab"
+                    class="nav-link"
+                    id="details-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#details"
+                    type="button"
+                    role="tab"
             >
                 Реквизиты
             </button>
@@ -47,12 +47,12 @@
 
         <li class="nav-item" role="presentation">
             <button
-                class="nav-link active"
-                id="receipts-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#receipts"
-                type="button"
-                role="tab"
+                    class="nav-link active"
+                    id="receipts-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#receipts"
+                    type="button"
+                    role="tab"
             >
                 Поступления
                 <span class="badge bg-secondary ms-1">
@@ -63,12 +63,12 @@
 
         <li class="nav-item" role="presentation">
             <button
-                class="nav-link"
-                id="relations-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#relations"
-                type="button"
-                role="tab"
+                    class="nav-link"
+                    id="relations-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#relations"
+                    type="button"
+                    role="tab"
             >
                 Связанные данные
             </button>
@@ -78,16 +78,16 @@
     <div class="tab-content border border-top-0 p-3">
 
         {{-- Общая информация --}}
-        @include('contractors.tabs.main')
+        @include('dictionaries.contractors.tabs.main')
 
         {{-- Реквизиты --}}
-        @include('contractors.tabs.details')
+        @include('dictionaries.contractors.tabs.details')
 
         {{-- Поступления --}}
-        @include('contractors.tabs.receipts')
+        @include('dictionaries.contractors.tabs.receipts')
 
         {{-- Связанные данные --}}
-        @include('contractors.tabs.relations')
+        @include('dictionaries.contractors.tabs.relations')
 
     </div>
 
