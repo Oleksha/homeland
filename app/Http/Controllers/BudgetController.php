@@ -6,14 +6,17 @@ use App\Domains\Budget\Actions\BudgetFormAction;
 use App\Domains\Budget\Actions\CreateBudget;
 use App\Domains\Budget\Actions\DeleteBudget;
 use App\Domains\Budget\Actions\ForceDeleteBudget;
+use App\Domains\Budget\Actions\ImportBudgetsAction;
 use App\Domains\Budget\Actions\IndexBudgetsAction;
 use App\Domains\Budget\Actions\RestoreBudget;
 use App\Domains\Budget\Actions\UpdateBudget;
 use App\Domains\Budget\DTO\BudgetData;
+use App\Domains\Budget\Imports\BudgetXlsxImport;
 use App\Domains\Budget\Models\Budget;
 use App\Http\Requests\BudgetIndexRequest;
 use App\Http\Requests\BudgetRequest;
 use Illuminate\Http\Request;
+use Vtiful\Kernel\Excel;
 
 class BudgetController extends Controller
 {
@@ -118,4 +121,16 @@ class BudgetController extends Controller
             ->route('budgets.archive')
             ->with('success', 'Бюджетная операция удалена навсегда.');
     }
+
+    public function import(BudgetImportRequest $request)
+    {
+        $import = new BudgetXlsxImport();
+
+        Excel::import($import, $request->file('file'));
+
+        $result = ImportBudgetsAction::run($import->rows());
+
+        return back()->with('importResult', $result);
+    }
+
 }
