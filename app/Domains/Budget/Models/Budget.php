@@ -3,7 +3,10 @@
 namespace App\Domains\Budget\Models;
 
 use App\Domains\Budget\Enums\BudgetStatus;
+use App\Domains\ExpenseItem\Models\ExpenseItem;
+use App\Domains\Vat\Models\Vat;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Budget extends Model
@@ -30,4 +33,20 @@ class Budget extends Model
         'payment_month' => 'date',
         'status' => BudgetStatus::class,
     ];
+
+    /**
+     * Ставки НДС
+     */
+    public function vat(): BelongsTo
+    {
+        return $this->belongsTo(Vat::class);
+    }
+
+    /**
+     * Статьи расхода
+     */
+    public function expenseItem(): BelongsTo
+    {
+        return $this->belongsTo(ExpenseItem::class);
+    }
 }

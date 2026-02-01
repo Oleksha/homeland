@@ -3,14 +3,13 @@
 namespace App\Domains\Budget\DTO;
 
 use App\Domains\Budget\Enums\BudgetStatus;
-use Carbon\Carbon;
 
 final readonly class BudgetData
 {
     public function __construct(
-        public Carbon $budgetPeriod,
-        public Carbon $expenseMonth,
-        public Carbon $paymentMonth,
+        public string $budgetPeriod,
+        public string $expenseMonth,
+        public string $paymentMonth,
         public string $budgetNumber,
         public float $amount,
         public int $vatId,
@@ -19,12 +18,12 @@ final readonly class BudgetData
         public ?string $description,
     ) {}
 
-    public static function fromRequest(array $data): self
+    public static function fromArray(array $data): self
     {
         return new self(
-            budgetPeriod: Carbon::parse($data['budget_period']),
-            expenseMonth: Carbon::parse($data['expense_month']),
-            paymentMonth: Carbon::parse($data['payment_month']),
+            budgetPeriod: $data['budget_period'],
+            expenseMonth: $data['expense_month'],
+            paymentMonth: $data['payment_month'],
             budgetNumber: $data['budget_number'],
             amount: (float)$data['amount'],
             vatId: (int)$data['vat_id'],

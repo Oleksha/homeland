@@ -7,7 +7,7 @@ use App\Support\Action;
 
 final class DeleteBudget extends Action
 {
-    public function handle(Budget $budget): void
+    public function __invoke(Budget $budget): void
     {
         $budget->delete();
     }

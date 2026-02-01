@@ -29,21 +29,17 @@ class BudgetRequest extends FormRequest
             'budget_period' => ['required', 'date'],
             'expense_month' => ['required', 'date'],
             'payment_month' => ['required', 'date'],
-
-            'number' => ['required', 'string', 'max:50'],
-
+            'budget_number' => ['required', 'string', 'max:50'],
             'amount' => ['required', 'numeric', 'min:0'],
-
             'vat_id' => ['required', 'exists:vats,id'],
             'expense_item_id' => ['required', 'exists:expense_items,id'],
-
             'status' => ['required', Rule::in(BudgetStatus::values())],
-
             'description' => ['nullable', 'string', 'max:1000'],
         ];
     }
 
-    public function toDto(): BudgetData
+
+    /*public function toDto(): BudgetData
     {
         return new BudgetData(
             budgetPeriod: CarbonImmutable::parse($this->budget_period),
@@ -59,5 +55,5 @@ class BudgetRequest extends FormRequest
             status: BudgetStatus::from($this->status),
             description: $this->description,
         );
-    }
+    }*/
 }

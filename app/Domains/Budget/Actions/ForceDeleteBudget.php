@@ -7,7 +7,7 @@ use App\Support\Action;
 
 final class ForceDeleteBudget extends Action
 {
-    public function handle(int $id): void
+    public function __invoke(int $id): void
     {
         Budget::withTrashed()->findOrFail($id)->forceDelete();
     }

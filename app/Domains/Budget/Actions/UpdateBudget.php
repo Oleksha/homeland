@@ -8,7 +8,7 @@ use App\Support\Action;
 
 final class UpdateBudget extends Action
 {
-    public function handle(Budget $budget, BudgetData $data): Budget
+    public function __invoke(Budget $budget, BudgetData $data): Budget
     {
         $budget->update([
             'budget_period'   => $data->budgetPeriod,

@@ -19,6 +19,16 @@ enum BudgetStatus: string
         };
     }
 
+    public function color(): string
+    {
+        return match ($this) {
+            self::Draft     => 'secondary',
+            self::Pending   => 'warning',
+            self::Approved  => 'success',
+            self::Rejected  => 'danger',
+        };
+    }
+
     public static function values(): array
     {
         return array_column(self::cases(), 'value');

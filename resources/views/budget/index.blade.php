@@ -83,104 +83,98 @@
         </div>
 
         {{-- Таблица --}}
-        <div class="card">
-            <div class="card-body p-0">
-                <table class="table table-hover mb-0 align-middle">
-                    <thead class="table-light">
-                    <tr>
-                        <th>Период</th>
-                        <th>№</th>
-                        <th>Статья расхода</th>
-                        <th class="text-end">Сумма</th>
-                        <th>НДС</th>
-                        <th>Статус</th>
-                        <th class="text-end">Действия</th>
-                    </tr>
-                    </thead>
+        <table class="table table-striped align-middle mb-0">
+            <thead>
+            <tr>
+                <th>Период</th>
+                <th>№</th>
+                <th>Статья расхода</th>
+                <th class="text-end">Сумма</th>
+                <th>НДС</th>
+                <th>Статус</th>
+                <th class="text-end">Действия</th>
+            </tr>
+            </thead>
 
-                    <tbody>
-                    @forelse($budgets as $budget)
-                        <tr class="{{ $budget->trashed() ? 'table-secondary' : '' }}">
-                            <td>
-                                {{ $budget->budget_period->format('Y-m') }}
-                            </td>
+            <tbody>
+            @forelse($budgets as $budget)
+                <tr class="{{ $budget->trashed() ? 'table-secondary' : '' }}">
+                    <td>
+                        {{ $budget->budget_period->format('Y-m') }}
+                    </td>
 
-                            <td>
-                                {{ $budget->number }}
-                            </td>
+                    <td>
+                        {{ $budget->number }}
+                    </td>
 
-                            <td>
-                                {{ $budget->expenseItem->name ?? '—' }}
-                            </td>
+                    <td>
+                        {{ $budget->expenseItem->name ?? '—' }}
+                    </td>
 
-                            <td class="text-end">
-                                {{ number_format($budget->amount, 2, ',', ' ') }}
-                            </td>
+                    <td class="text-end">
+                        {{ number_format($budget->amount, 2, ',', ' ') }}
+                    </td>
 
-                            <td>
-                                {{ $budget->vat->name ?? '—' }}
-                            </td>
+                    <td>
+                        {{ $budget->vat->name ?? '—' }}
+                    </td>
 
-                            <td>
+                    <td>
                                 <span class="badge bg-{{ $budget->status->color() }}">
                                     {{ $budget->status->label() }}
                                 </span>
-                            </td>
+                    </td>
 
-                            <td class="text-end">
-                                <div class="btn-group btn-group-sm">
+                    <td class="text-end">
+                        <div class="d-flex  justify-content-end">
 
-                                    <a href="{{ route('budgets.show', $budget) }}"
-                                       class="btn btn-outline-secondary">
-                                        👁
-                                    </a>
+                            <a href="{{ route('budgets.show', $budget) }}"
+                               class="btn btn-outline-secondary">
+                                👁
+                            </a>
 
-                                    @unless($budget->trashed())
-                                        <a href="{{ route('budgets.edit', $budget) }}"
-                                           class="btn btn-outline-primary">
-                                            ✏
-                                        </a>
+                            @unless($budget->trashed())
+                                <a href="{{ route('budgets.edit', $budget) }}"
+                                   class="btn btn-outline-primary ms-2">
+                                    ✏️
+                                </a>
 
-                                        <form method="post"
-                                              action="{{ route('budgets.destroy', $budget) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-outline-danger"
-                                                    onclick="return confirm('Удалить запись?')">
-                                                🗑
-                                            </button>
-                                        </form>
-                                    @else
-                                        <form method="post"
-                                              action="{{ route('budgets.restore', $budget->id) }}">
-                                            @csrf
-                                            <button class="btn btn-outline-success">
-                                                ♻
-                                            </button>
-                                        </form>
-                                    @endunless
+                                <form method="post"
+                                      action="{{ route('budgets.destroy', $budget) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-outline-danger ms-2"
+                                            onclick="return confirm('Удалить запись?')">
+                                        🗑
+                                    </button>
+                                </form>
+                            @else
+                                <form method="post"
+                                      action="{{ route('budgets.restore', $budget->id) }}">
+                                    @csrf
+                                    <button class="btn btn-outline-success ms-2">
+                                        ♻
+                                    </button>
+                                </form>
+                            @endunless
 
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="text-center text-muted py-4">
-                                Записей не найдено
-                            </td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
-            </div>
+                        </div>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center text-muted py-4">
+                        Записей не найдено
+                    </td>
+                </tr>
+            @endforelse
+            </tbody>
+        </table>
 
-            {{-- Пагинация --}}
-            @if($budgets->hasPages())
-                <div class="card-footer">
-                    {{ $budgets->links() }}
-                </div>
-            @endif
-        </div>
+        {{-- Пагинация --}}
+        @if($budgets->hasPages())
+            <div class="mt-3">{{ $budgets->links() }}</div>
+        @endif
 
     </div>
 @endsection

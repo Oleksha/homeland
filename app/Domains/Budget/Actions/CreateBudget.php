@@ -8,7 +8,7 @@ use App\Support\Action;
 
 final class CreateBudget extends Action
 {
-    public function handle(BudgetData $data): Budget
+    public function __invoke(BudgetData $data): Budget
     {
         return Budget::create([
             'budget_period'   => $data->budgetPeriod,
