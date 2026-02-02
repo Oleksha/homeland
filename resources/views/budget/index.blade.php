@@ -9,9 +9,19 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 mb-0">Бюджет</h1>
 
-            <a href="{{ route('budgets.create') }}" class="btn btn-primary">
-                + Новая операция
-            </a>
+            <div class="d-flex gap-2">
+                <a href="{{ route('budgets.create') }}" class="btn btn-primary">
+                    + Новая операция
+                </a>
+
+                <button
+                    class="btn btn-outline-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#importBudgetModal"
+                >
+                    📥 Импорт из Excel
+                </button>
+            </div>
         </div>
 
         {{-- Фильтры --}}
