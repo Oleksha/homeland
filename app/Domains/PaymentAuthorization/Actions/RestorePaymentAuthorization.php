@@ -7,7 +7,7 @@ use App\Support\Action;
 
 class RestorePaymentAuthorization extends Action
 {
-    public function handle(int $id): void
+    public function __invoke(int $id): void
     {
         PaymentAuthorization::withTrashed()
             ->findOrFail($id)
