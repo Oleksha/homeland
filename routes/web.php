@@ -69,3 +69,17 @@ Route::prefix('budgets')->name('budgets.')->group(function () {
 });
 
 Route::resource('budgets', Controllers\BudgetController::class);
+
+// Разрешения на оплату
+Route::prefix('payment-authorizations')
+    ->name('payment-authorizations.')
+    ->controller(Controllers\PaymentAuthorizationController::class)
+    ->group(function () {
+
+        Route::get('archive', 'archive')->name('archive');
+        Route::post('{id}/restore', 'restore')->name('restore');
+        Route::delete('{id}/force', 'forceDelete')->name('force');
+
+    });
+
+Route::resource('payment-authorizations', Controllers\PaymentAuthorizationController::class);
