@@ -114,7 +114,7 @@
                     </td>
 
                     <td>
-                        {{ $budget->number }}
+                        {{ $budget->budget_number }}
                     </td>
 
                     <td>
