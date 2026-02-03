@@ -5,7 +5,7 @@ namespace App\Domains\PaymentAuthorization\Actions;
 use App\Domains\PaymentAuthorization\DTO\PaymentAuthorizationData;
 use App\Domains\PaymentAuthorization\Models\PaymentAuthorization;
 
-final class CreateAuthorization
+final class CreatePaymentAuthorization
 {
     public static function run(PaymentAuthorizationData $data): PaymentAuthorization
     {
