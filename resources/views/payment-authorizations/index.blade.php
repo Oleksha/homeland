@@ -42,11 +42,11 @@
 
                     <td>
                         <a href="{{ route('contractors.show', $auth->contractor->id) }}">
-                            {{ $auth->contractor->name ?? '-' }}
+                            {{ $auth->contractor->name ?? '—' }}
                         </a>
                     </td>
 
-                    <td>{{ $auth->expenseItem->name ?? '-' }}</td>
+                    <td>{{ $auth->expenseItem->name ?? '—' }}</td>
 
                     <td>{{ optional($auth->date_start)->format('d.m.Y') }}</td>
 
@@ -70,7 +70,7 @@
                         <form action="{{ route('payment-authorizations.destroy', $auth) }}"
                               method="POST"
                               class="d-inline"
-                              onsubmit="return confirm('Удалить запись?')">
+                              onsubmit="return confirm('Переместить запись в архив?')">
 
                             @csrf
                             @method('DELETE')
