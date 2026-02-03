@@ -40,6 +40,29 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle {{ request()->routeIs('payment-authorizations.*') ? 'active' :
+                     '' }}"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+
+                        <i class="bi bi-cash-stack"></i>
+                        Платежи
+                    </a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ route('payment-authorizations.index') }}">
+                                Разрешения на оплату
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
                     <a
                         class="nav-link dropdown-toggle {{ $isActive('vats.*', 'contractor-types.*', 'directories.*', 'contractors.*') }}"
                         role="button"
