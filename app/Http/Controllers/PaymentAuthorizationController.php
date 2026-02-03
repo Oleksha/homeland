@@ -85,7 +85,7 @@ class PaymentAuthorizationController extends Controller
     public function archive()
     {
         $items = PaymentAuthorization::onlyTrashed()
-            ->with(['partner', 'expenseItem'])
+            ->with(['contractor', 'expenseItem'])
             ->paginate();
 
         return view('payment-authorizations.archive', [
