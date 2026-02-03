@@ -36,7 +36,9 @@
                     <td>{{ $item->id }}</td>
 
                     <td>
-                        {{ $item->partner?->name ?? '—' }}
+                        <a href="{{ route('contractors.show', $item->contractor->id) }}">
+                            {{ $item->contractor->name ?? '—' }}
+                        </a>
                     </td>
 
                     <td>
@@ -64,11 +66,10 @@
                               action="{{ route('payment-authorizations.restore', $item->id) }}"
                               class="d-inline">
                             @csrf
-                            @method('PATCH')
 
                             <button class="btn btn-sm btn-success"
                                     onclick="return confirm('Восстановить запись?')">
-                                Восстановить
+                                ♻
                             </button>
                         </form>
 
@@ -81,7 +82,7 @@
 
                             <button class="btn btn-sm btn-danger"
                                     onclick="return confirm('Удалить окончательно?')">
-                                Удалить
+                                🗑
                             </button>
                         </form>
 
