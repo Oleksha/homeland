@@ -12,6 +12,7 @@ use App\Domains\PaymentAuthorization\Actions\{CreatePaymentAuthorization,
     RestorePaymentAuthorization,
     UpdatePaymentAuthorization,
     DeletePaymentAuthorization};
+use Illuminate\Http\Request;
 
 class PaymentAuthorizationController extends Controller
 {
@@ -25,11 +26,18 @@ class PaymentAuthorizationController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $contractorId = request('contractor_id');
+
         return view('payment-authorizations.form', [
+            'paymentAuthorization' => new PaymentAuthorization([
+                'contractor_id' => $contractorId,
+            ]),
+
             'contractors' => Contractor::orderBy('name')->get(),
             'expenseItems' => ExpenseItem::orderBy('name')->get(),
+
             'breadcrumbs' => [
                 ['title' => 'Разрешения на оплату', 'url' => route('payment-authorizations.index')],
                 ['title' => 'Создать разрешение'],
