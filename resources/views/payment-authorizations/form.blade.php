@@ -32,12 +32,14 @@
                         <label class="form-label">Контрагент</label>
 
                         <select name="contractor_id" class="form-select" required>
-                            <option value="">Выберите</option>
+                            <option value="">Выберите контрагента</option>
 
                             @foreach($contractors as $contractor)
                                 <option value="{{ $contractor->id }}"
                                     @selected(old('contractor_id',
-                                        $authorization->contractor_id ?? '') == $contractor->id)>
+                                        $paymentAuthorization->contractor_id ?? ($authorization->contractor_id ?? ''))
+                                         ==
+                                        $contractor->id)>
                                     {{ $contractor->name }}
                                 </option>
                             @endforeach
