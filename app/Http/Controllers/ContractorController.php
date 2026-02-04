@@ -76,9 +76,16 @@ class ContractorController extends Controller
             ->limit(20) // чтобы не убить страницу
             ->get();
 
+        $paymentAuthorizations = $contractor
+            ->paymentAuthorizations()
+            ->active()
+            ->with('expenseItem')
+            ->get();
+
         return view('dictionaries.contractors.show', [
             'contractor' => $contractor,
             'receipts' => $receipts,
+            'paymentAuthorizations' => $paymentAuthorizations,
             'breadcrumbs' => [
                 ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'Контрагенты', 'url' => route('contractors.index')],
