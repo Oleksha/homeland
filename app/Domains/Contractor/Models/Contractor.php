@@ -3,6 +3,7 @@
 namespace App\Domains\Contractor\Models;
 
 use App\Domains\ContractorType\Models\ContractorType;
+use App\Domains\PaymentAuthorization\Models\PaymentAuthorization;
 use App\Domains\Receipt\Models\Receipt;
 use App\Domains\Vat\Models\Vat;
 use Illuminate\Database\Eloquent\Model;
@@ -54,5 +55,13 @@ class Contractor extends Model
     public function receipts(): HasMany|Contractor
     {
         return $this->hasMany(Receipt::class);
+    }
+
+    /**
+     * Разрешения на оплату
+     */
+    public function paymentAuthorizations(): HasMany|Contractor
+    {
+        return $this->hasMany(PaymentAuthorization::class);
     }
 }
