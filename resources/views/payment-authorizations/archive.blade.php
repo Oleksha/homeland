@@ -25,7 +25,7 @@
                 <th>Дата окончания</th>
                 <th>Отсрочка</th>
                 <th>Сумма</th>
-                <th width="180">Действия</th>
+                <th>Действия</th>
             </tr>
             </thead>
 
@@ -59,7 +59,7 @@
                         {{ number_format($item->amount, 2, ',', ' ') }}
                     </td>
 
-                    <td class="text-center">
+                    <td class="text-end text-nowrap">
 
                         {{-- Restore --}}
                         <form method="POST"
