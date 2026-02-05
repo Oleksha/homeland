@@ -56,7 +56,7 @@
 
                     <td>{{ $auth->delay }} дн.</td>
 
-                    <td class="text-end">
+                    <td class="text-end text-nowrap">
                         {{ number_format($auth->amount, 2, ',', ' ') }}
                     </td>
 
