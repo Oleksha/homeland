@@ -55,7 +55,7 @@
                         {{ $item->delay ? $item->delay.' дн.' : '—' }}
                     </td>
 
-                    <td class="text-end">
+                    <td class="text-end text-nowrap">
                         {{ number_format($item->amount, 2, ',', ' ') }}
                     </td>
 
