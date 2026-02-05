@@ -31,7 +31,7 @@
                 <th>Дата окончания</th>
                 <th>Отсрочка</th>
                 <th class="text-end">Сумма</th>
-                <th width="150"></th>
+                <th>Действия</th>
             </tr>
             </thead>
 
@@ -60,7 +60,7 @@
                         {{ number_format($auth->amount, 2, ',', ' ') }}
                     </td>
 
-                    <td class="text-end">
+                    <td class="text-end text-nowrap">
 
                         <a href="{{ route('payment-authorizations.edit', $auth) }}"
                            class="btn btn-sm btn-outline-primary">
