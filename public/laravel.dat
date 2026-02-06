@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Янв 29 2026 г., 12:50
+-- Время создания: Фев 06 2026 г., 13:31
 -- Версия сервера: 10.4.26-MariaDB-log
 -- Версия PHP: 8.3.6
 
@@ -20,6 +20,36 @@ SET time_zone = "+00:00";
 --
 -- База данных: `laravel`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `budgets`
+--
+
+CREATE TABLE `budgets` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `budget_period` date NOT NULL COMMENT 'Сценарий бюджета (YYYY-MM-01)',
+  `expense_month` date NOT NULL COMMENT 'Месяц расхода (YYYY-MM-01)',
+  `payment_month` date NOT NULL COMMENT 'Месяц оплаты (YYYY-MM-01)',
+  `budget_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Номер бюджетной операции',
+  `amount` decimal(15,2) NOT NULL COMMENT 'Сумма с НДС',
+  `vat_id` bigint(20) UNSIGNED NOT NULL,
+  `expense_item_id` bigint(20) UNSIGNED NOT NULL,
+  `status` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Статус бюджетной операции',
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `budgets`
+--
+
+INSERT INTO `budgets` (`id`, `budget_period`, `expense_month`, `payment_month`, `budget_number`, `amount`, `vat_id`, `expense_item_id`, `status`, `description`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, '2026-02-01', '2026-02-01', '2026-03-01', '123456', '120000.00', 1, 1, 'approved', 'Аренда здания', NULL, '2026-02-02 02:50:02', '2026-02-02 02:50:02'),
+(2, '2026-01-01', '2026-01-01', '2026-02-01', '11111', '1000000.00', 3, 31, 'rejected', NULL, NULL, '2026-02-02 02:51:25', '2026-02-02 03:08:10');
 
 -- --------------------------------------------------------
 
@@ -75,8 +105,8 @@ CREATE TABLE `contractors` (
 
 INSERT INTO `contractors` (`id`, `name`, `code`, `type_id`, `is_supplier`, `inn`, `kpp`, `address`, `phone`, `email`, `delay`, `vat_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Тандер АО', '000000068', 1, 1, '2310031475', '997350001', '350002, Краснодарский край, Краснодар г, им Леваневского ул, дом № 185', '+7(861)2109810', NULL, 10, 2, '2026-01-23 05:34:55', '2026-01-23 05:34:55', NULL),
-(2, 'Неизвестный Александр Алексеевич ИП', 'CNT002339', 2, 1, '632412383560', NULL, '445047, Самарская обл, Тольятти г, Южное ш, дом 45, квартира 39', NULL, 'a.neizvestnyy1989@mail.ru', 14, 1, '2026-01-23 05:58:46', '2026-01-23 06:46:41', NULL),
-(3, 'АКИМОВ ВАДИМ АНАТОЛЬЕВИЧ', 'TOF0000005', 3, 1, '632106553420', NULL, '445044, Самарская обл, Тольятти г, Космонавтов б-р, дом № 18, кв. 21', NULL, NULL, 5, 1, '2026-01-23 06:50:03', '2026-01-29 06:37:15', NULL);
+(2, 'Неизвестный Александр Алексеевич ИП 2', 'CNT002339', 2, 1, '632412383560', NULL, '445047, Самарская обл, Тольятти г, Южное ш, дом 45, квартира 39', NULL, 'a.neizvestnyy1989@mail.ru', 14, 1, '2026-01-23 05:58:46', '2026-01-30 04:15:04', NULL),
+(3, 'АКИМОВ ВАДИМ АНАТОЛЬЕВИЧ', 'TOF0000005', 3, 1, '632106553420', NULL, '445044, Самарская обл, Тольятти г, Космонавтов б-р, дом № 18, кв. 21', NULL, NULL, 5, 1, '2026-01-23 06:50:03', '2026-01-30 04:15:24', '2026-01-30 04:15:24');
 
 -- --------------------------------------------------------
 
@@ -97,7 +127,7 @@ CREATE TABLE `contractor_types` (
 
 INSERT INTO `contractor_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (1, 'Юридическое лицо', '2026-01-22 08:30:26', '2026-01-22 08:32:09'),
-(2, 'Индивидуальный предприниматель', '2026-01-22 08:30:54', '2026-01-22 08:30:54'),
+(2, 'Индивидуальный предприниматель', '2026-01-22 08:30:54', '2026-01-30 08:24:57'),
 (3, 'Физическое лицо', '2026-01-22 08:31:17', '2026-01-22 08:31:17');
 
 -- --------------------------------------------------------
@@ -185,7 +215,8 @@ INSERT INTO `expense_items` (`id`, `name`, `is_report_selection`, `created_at`, 
 (63, 'СП Разрешительная и торговая документация', 1, '2026-01-29 05:27:15', '2026-01-29 05:27:15', NULL),
 (64, 'СП Транспортировка МЦ (кроме товара)', 0, '2026-01-29 05:27:30', '2026-01-29 05:27:30', NULL),
 (65, 'СП Командировочные ПР', 1, '2026-01-29 05:28:02', '2026-01-29 05:28:02', NULL),
-(66, 'СП Расходы на обязательное обучение', 1, '2026-01-29 05:28:15', '2026-01-29 05:28:15', NULL);
+(66, 'СП Расходы на обязательное обучение', 1, '2026-01-29 05:28:15', '2026-01-29 05:28:15', NULL),
+(67, 'Проба 2', 0, '2026-01-30 03:58:01', '2026-01-30 03:58:38', '2026-01-30 03:58:38');
 
 -- --------------------------------------------------------
 
@@ -266,7 +297,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2026_01_26_114717_create_receipt_items_table', 5),
 (10, '2026_01_27_092624_add_soft_deletes_to_receipts_and_items', 6),
 (11, '2026_01_28_072620_remove_deleted_at_from_receipt_items', 7),
-(12, '2026_01_29_053215_create_expense_items_table', 8);
+(12, '2026_01_29_053215_create_expense_items_table', 8),
+(13, '2026_01_31_120731_create_budgets_table', 9),
+(14, '2026_02_03_070400_create_payment_authorizations_table', 10),
+(15, '2026_02_03_074026_add_soft_delete_to_payment_authorizations', 10),
+(16, '2026_02_06_071014_create_units_table', 11);
 
 -- --------------------------------------------------------
 
@@ -279,6 +314,34 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `payment_authorizations`
+--
+
+CREATE TABLE `payment_authorizations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `contractor_id` bigint(20) UNSIGNED NOT NULL,
+  `expense_item_id` bigint(20) UNSIGNED NOT NULL,
+  `number` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_start` date NOT NULL,
+  `date_end` date NOT NULL,
+  `delay` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `amount` decimal(15,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `payment_authorizations`
+--
+
+INSERT INTO `payment_authorizations` (`id`, `contractor_id`, `expense_item_id`, `number`, `date_start`, `date_end`, `delay`, `amount`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 2, 31, '1234/022026УЗ', '2026-02-01', '2027-02-01', 14, '125000.00', '2026-02-03 04:52:43', '2026-02-03 08:29:45', NULL),
+(2, 1, 1, 'БАК/ТК ГК №214-ЗГ от 27.09.2024', '2026-01-01', '2026-03-05', 5, '10000000.00', '2026-02-04 07:57:31', '2026-02-05 08:49:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -360,7 +423,32 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('GR3qaFqji4TButyQUezHnVxvn0h2cwBWnSvoEU4z', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUTg0cXNXMnEyamlZZFJmTWIzNzdSaGxJYWFBSzdjVzh4RTlDTHFvNiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9leHBlbnNlLWl0ZW1zIjtzOjU6InJvdXRlIjtzOjE5OiJleHBlbnNlLWl0ZW1zLmluZGV4Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1769679750);
+('JGGml70h1XOL3RtD4pVw3ZfsRkf2UE1pktdmdTCA', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUWY4cWZZeXVYWlRnZjVERFVCUUZrR2JZcTBXRFJjRTZCNnQzS3RmSyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91bml0cyI7czo1OiJyb3V0ZSI7czoxMToidW5pdHMuaW5kZXgiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1770369434);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `units`
+--
+
+CREATE TABLE `units` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `short_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `units`
+--
+
+INSERT INTO `units` (`id`, `name`, `short_name`, `code`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'штука', 'шт', NULL, 1, '2026-02-06 06:06:13', '2026-02-06 06:09:52', NULL),
+(2, 'литр', 'л', NULL, 1, '2026-02-06 06:08:34', '2026-02-06 06:17:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -401,8 +489,8 @@ CREATE TABLE `vats` (
 --
 
 INSERT INTO `vats` (`id`, `name`, `rate`, `code`, `is_active`, `is_default`, `created_at`, `updated_at`) VALUES
-(1, 'Без НДС', '0.00', 'no_vat', 1, 0, '2026-01-22 03:53:43', '2026-01-22 03:53:43'),
-(2, '22%', '22.00', '22_vat', 1, 1, '2026-01-22 03:54:12', '2026-01-22 03:55:51'),
+(1, 'Без НДС', '0.00', 'no_vat', 1, 1, '2026-01-22 03:53:43', '2026-01-30 06:51:37'),
+(2, '22%', '22.00', '22_vat', 1, 0, '2026-01-22 03:54:12', '2026-01-30 06:51:37'),
 (3, '20%', '20.00', '20_vat', 1, 0, '2026-01-22 03:54:40', '2026-01-22 03:54:40'),
 (4, '10%', '10.00', '10_vat', 1, 0, '2026-01-22 03:54:54', '2026-01-22 03:54:54'),
 (5, '7%', '7.00', '7_vat', 1, 0, '2026-01-22 03:55:11', '2026-01-22 03:55:11'),
@@ -411,6 +499,18 @@ INSERT INTO `vats` (`id`, `name`, `rate`, `code`, `is_active`, `is_default`, `cr
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `budgets`
+--
+ALTER TABLE `budgets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `budgets_vat_id_foreign` (`vat_id`),
+  ADD KEY `budgets_expense_item_id_foreign` (`expense_item_id`),
+  ADD KEY `budgets_budget_period_index` (`budget_period`),
+  ADD KEY `budgets_expense_month_index` (`expense_month`),
+  ADD KEY `budgets_payment_month_index` (`payment_month`),
+  ADD KEY `budgets_status_index` (`status`);
 
 --
 -- Индексы таблицы `cache`
@@ -480,6 +580,14 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Индексы таблицы `payment_authorizations`
+--
+ALTER TABLE `payment_authorizations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `payment_authorizations_expense_item_id_foreign` (`expense_item_id`),
+  ADD KEY `payment_authorizations_contractor_id_expense_item_id_index` (`contractor_id`,`expense_item_id`);
+
+--
 -- Индексы таблицы `receipts`
 --
 ALTER TABLE `receipts`
@@ -503,6 +611,12 @@ ALTER TABLE `sessions`
   ADD KEY `sessions_last_activity_index` (`last_activity`);
 
 --
+-- Индексы таблицы `units`
+--
+ALTER TABLE `units`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
@@ -521,6 +635,12 @@ ALTER TABLE `vats`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `budgets`
+--
+ALTER TABLE `budgets`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT для таблицы `contractors`
 --
 ALTER TABLE `contractors`
@@ -536,7 +656,7 @@ ALTER TABLE `contractor_types`
 -- AUTO_INCREMENT для таблицы `expense_items`
 --
 ALTER TABLE `expense_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT для таблицы `failed_jobs`
@@ -554,7 +674,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT для таблицы `payment_authorizations`
+--
+ALTER TABLE `payment_authorizations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `receipts`
@@ -567,6 +693,12 @@ ALTER TABLE `receipts`
 --
 ALTER TABLE `receipt_items`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT для таблицы `units`
+--
+ALTER TABLE `units`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -585,11 +717,25 @@ ALTER TABLE `vats`
 --
 
 --
+-- Ограничения внешнего ключа таблицы `budgets`
+--
+ALTER TABLE `budgets`
+  ADD CONSTRAINT `budgets_expense_item_id_foreign` FOREIGN KEY (`expense_item_id`) REFERENCES `expense_items` (`id`),
+  ADD CONSTRAINT `budgets_vat_id_foreign` FOREIGN KEY (`vat_id`) REFERENCES `vats` (`id`);
+
+--
 -- Ограничения внешнего ключа таблицы `contractors`
 --
 ALTER TABLE `contractors`
   ADD CONSTRAINT `contractors_type_id_foreign` FOREIGN KEY (`type_id`) REFERENCES `contractor_types` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `contractors_vat_id_foreign` FOREIGN KEY (`vat_id`) REFERENCES `vats` (`id`) ON DELETE SET NULL;
+
+--
+-- Ограничения внешнего ключа таблицы `payment_authorizations`
+--
+ALTER TABLE `payment_authorizations`
+  ADD CONSTRAINT `payment_authorizations_contractor_id_foreign` FOREIGN KEY (`contractor_id`) REFERENCES `contractors` (`id`),
+  ADD CONSTRAINT `payment_authorizations_expense_item_id_foreign` FOREIGN KEY (`expense_item_id`) REFERENCES `expense_items` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `receipts`
