@@ -38,4 +38,13 @@ return [
         'soft_delete' => true,
     ],
 
+    'units' => [
+        'title' => 'Единицы измерения',
+        'description' => 'Справочник единиц измерения для складских операций и формирования отчетов.',
+        'route' => 'units.index',
+        'model' => \App\Domains\Unit\Models\Unit::class,
+        'icon' => 'bi bi-wallet2',
+        'soft_delete' => true,
+    ],
+
 ];
