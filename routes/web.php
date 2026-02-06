@@ -83,3 +83,19 @@ Route::prefix('payment-authorizations')
     });
 
 Route::resource('payment-authorizations', Controllers\PaymentAuthorizationController::class);
+
+// Единицы измерения
+Route::prefix('units')
+    ->name('units.')
+    ->controller(Controllers\UnitController::class)
+    ->group(function () {
+
+        Route::get('archive', 'archive')->name('archive');
+        Route::post('{id}/restore', 'restore')->name('restore');
+        Route::delete('{id}/force-delete', 'forceDelete')->name('force-delete');
+
+    });
+
+Route::resource('units', Controllers\UnitController::class);
+
+
