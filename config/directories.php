@@ -47,4 +47,13 @@ return [
         'soft_delete' => true,
     ],
 
+    'storage-locations' => [
+        'title' => 'Места хранения',
+        'description' => 'Справочник мест хранения для складских операций и формирования отчетов.',
+        'route' => 'storage-locations.index',
+        'model' => \App\Domains\StorageLocation\Models\StorageLocation::class,
+        'icon' => 'bi bi-wallet2',
+        'soft_delete' => true,
+    ],
+
 ];
