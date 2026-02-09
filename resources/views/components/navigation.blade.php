@@ -65,7 +65,7 @@
                 <li class="nav-item dropdown">
                     <a
                         class="nav-link dropdown-toggle {{ $isActive('vats.*', 'contractor-types.*', 'directories.*',
-                         'contractors.*', 'expense-items.*', 'units.*') }}"
+                         'contractors.*', 'expense-items.*', 'units.*', 'storage-locations.*') }}"
                         role="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
@@ -118,6 +118,14 @@
                                 href="{{ route('units.index') }}"
                             >
                                 Единицы измерения
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class="dropdown-item {{ $isActive('storage-locations.*') }}"
+                                href="{{ route('storage-locations.index') }}"
+                            >
+                                Места хранения
                             </a>
                         </li>
                     </ul>
