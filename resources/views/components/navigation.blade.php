@@ -64,8 +64,10 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a
-                        class="nav-link dropdown-toggle {{ $isActive('vats.*', 'contractor-types.*', 'directories.*',
-                         'contractors.*', 'expense-items.*', 'units.*', 'storage-locations.*') }}"
+                        class="nav-link dropdown-toggle {{ $isActive('vats.*',
+                         'contractor-types.*', 'directories.*', 'categories.*',
+                         'contractors.*', 'expense-items.*', 'units.*',
+                         'storage-locations.*') }}"
                         role="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
@@ -126,6 +128,14 @@
                                 href="{{ route('storage-locations.index') }}"
                             >
                                 Места хранения
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class="dropdown-item {{ $isActive('categories.*') }}"
+                                href="{{ route('categories.index') }}"
+                            >
+                                Категории номенклатуры
                             </a>
                         </li>
                     </ul>
