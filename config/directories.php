@@ -56,4 +56,13 @@ return [
         'soft_delete' => true,
     ],
 
+    'categories' => [
+        'title' => 'Категории номенклатуры',
+        'description' => 'Справочник категорий номенклатуры для складских операций и формирования отчетов.',
+        'route' => 'categories.index',
+        'model' => \App\Domains\Category\Models\Category::class,
+        'icon' => 'bi bi-wallet2',
+        'soft_delete' => true,
+    ],
+
 ];
