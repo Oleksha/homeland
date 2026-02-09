@@ -39,7 +39,9 @@ class StorageLocationController extends Controller
     {
         $action->execute(StorageLocationDTO::fromRequest($request));
 
-        return redirect()->route('storage-locations.index');
+        return redirect()
+            ->route('storage-locations.index')
+            ->with('success','Место хранения создано.');
     }
 
     public function edit(StorageLocation $storageLocation)
@@ -64,7 +66,9 @@ class StorageLocationController extends Controller
             StorageLocationDTO::fromRequest($request)
         );
 
-        return redirect()->route('storage-locations.index');
+        return redirect()
+            ->route('storage-locations.index')
+            ->with('success','Место хранения изменено.');
     }
 
     public function destroy(StorageLocation $storageLocation, DeleteStorageLocationAction $action)
