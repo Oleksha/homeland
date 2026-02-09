@@ -111,3 +111,17 @@ Route::prefix('storage-locations')
     });
 
 Route::resource('storage-locations', Controllers\StorageLocationController::class);
+
+// Категории
+Route::prefix('categories')
+    ->name('categories.')
+    ->controller(Controllers\CategoryController::class)
+    ->group(function () {
+
+        Route::get('archive', 'archive')->name('archive');
+        Route::post('{id}/restore', 'restore')->name('restore');
+        Route::delete('{id}/force-delete', 'forceDelete')->name('force-delete');
+
+    });
+
+Route::resource('categories', Controllers\CategoryController::class);
