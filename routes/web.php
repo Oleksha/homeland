@@ -98,4 +98,16 @@ Route::prefix('units')
 
 Route::resource('units', Controllers\UnitController::class);
 
+// Места хранения
+Route::prefix('storage-locations')
+    ->name('storage-locations.')
+    ->controller(Controllers\StorageLocationController::class)
+    ->group(function () {
 
+        Route::get('archive', 'archive')->name('archive');
+        Route::post('{id}/restore', 'restore')->name('restore');
+        Route::delete('{id}/force-delete', 'forceDelete')->name('force-delete');
+
+    });
+
+Route::resource('storage-locations', Controllers\StorageLocationController::class);
