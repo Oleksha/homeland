@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
-
-@isset($storageLocation)
-    @section('title', 'Изменение места хранения')
-@else
-    @section('title', 'Добавление места хранения')
-@endisset
+@section('title')
+    {{ isset($storageLocation) 
+        ? 'Редактирование места хранения' 
+        : 'Создание места хранения' }}
+@endsection
 
 @section('content')
 
