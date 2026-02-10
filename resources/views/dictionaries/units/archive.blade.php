@@ -19,7 +19,7 @@
             <th>Название</th>
             <th>Сокр.</th>
             <th>Код</th>
-            <th style="width: 150px">Действие</th>
+            <th style="width: 100px">Действие</th>
         </tr>
         </thead>
 
