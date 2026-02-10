@@ -67,7 +67,7 @@
                         class="nav-link dropdown-toggle {{ $isActive('vats.*',
                          'contractor-types.*', 'directories.*', 'categories.*',
                          'contractors.*', 'expense-items.*', 'units.*',
-                         'storage-locations.*') }}"
+                         'storage-locations.*', 'nomenclatures.*') }}"
                         role="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
@@ -136,6 +136,14 @@
                                 href="{{ route('categories.index') }}"
                             >
                                 Категории номенклатуры
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class="dropdown-item {{ $isActive('nomenclatures.*') }}"
+                                href="{{ route('nomenclatures.index') }}"
+                            >
+                                Номенклатура
                             </a>
                         </li>
                     </ul>
