@@ -21,7 +21,7 @@ class CategoryController extends Controller
     {
         $categories = Category::with('parent')
             ->orderBy('name')
-            ->get();
+            ->paginate(10);
 
         return view('dictionaries.categories.index', [
             'categories' => $categories,
@@ -94,7 +94,9 @@ class CategoryController extends Controller
     public function archive()
     {
         return view('dictionaries.categories.archive', [
-            'categories' => Category::onlyTrashed()->orderBy('name')->get(),
+            'categories' => Category::onlyTrashed()
+                ->orderBy('name')
+                ->paginate(10),
             'breadcrumbs' => [
                 ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'Архив категорий номенклатуры'],
