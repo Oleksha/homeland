@@ -19,13 +19,13 @@
 
     </div>
 
-    <table class="table table-striped align-middle mb-0">
+    <table class="table table-striped align-middle mb-3">
         <thead>
         <tr>
             <th>Название</th>
             <th>Сокр.</th>
             <th>Код</th>
-            <th style="width: 200px">Действие</th>
+            <th style="width: 100px">Действие</th>
         </tr>
         </thead>
 
@@ -59,5 +59,7 @@
         @endforeach
         </tbody>
     </table>
+
+    {{ $units->links() }}
 
 @endsection
