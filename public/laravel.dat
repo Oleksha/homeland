@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 06 2026 г., 13:31
+-- Время создания: Фев 10 2026 г., 13:06
 -- Версия сервера: 10.4.26-MariaDB-log
 -- Версия PHP: 8.3.6
 
@@ -74,6 +74,54 @@ CREATE TABLE `cache_locks` (
   `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `parent_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Инструменты', NULL, NULL, '2026-02-09 07:26:07', '2026-02-09 07:26:07'),
+(2, 'Резиновые кольца', NULL, NULL, '2026-02-09 07:27:43', '2026-02-09 07:27:43'),
+(3, 'Метизы', NULL, NULL, '2026-02-09 07:28:06', '2026-02-09 08:37:25'),
+(4, 'Манжеты', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(5, 'Подшипники', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(6, 'Пневматика', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(7, 'Электрика', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(8, 'Сантехника', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(9, 'Масла и смазки', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(10, 'Разное', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(11, 'Запчасти', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(12, 'ANKO', 11, NULL, '2023-10-07 03:36:35', '2025-10-07 01:22:31'),
+(13, 'RSA', 11, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(14, 'Клей / Герметик', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(15, 'Пожарная сигнализация', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(16, 'Ленты конвейерные', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(17, 'Цепи и звенья', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(18, 'Аккумуляторы / Батареи', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(19, 'Компьютеры / Принтеры', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(20, 'ТЭНы', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(21, 'BALPE', 11, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(22, 'Куттер', 11, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(23, 'Тестомес', 11, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(24, 'Манометры', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(25, 'Стройматериалы', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(26, 'Стопорные кольца', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35'),
+(27, 'Ремни', NULL, NULL, '2023-10-07 03:36:35', '2023-10-07 03:36:35');
 
 -- --------------------------------------------------------
 
@@ -301,7 +349,28 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2026_01_31_120731_create_budgets_table', 9),
 (14, '2026_02_03_070400_create_payment_authorizations_table', 10),
 (15, '2026_02_03_074026_add_soft_delete_to_payment_authorizations', 10),
-(16, '2026_02_06_071014_create_units_table', 11);
+(16, '2026_02_06_071014_create_units_table', 11),
+(17, '2026_02_09_064617_create_storage_locations_table', 12),
+(18, '2026_02_09_091755_create_categories_table', 13),
+(19, '2026_02_10_063350_create_nomenclatures_table', 14);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `nomenclatures`
+--
+
+CREATE TABLE `nomenclatures` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit_id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -423,7 +492,31 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('JGGml70h1XOL3RtD4pVw3ZfsRkf2UE1pktdmdTCA', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUWY4cWZZeXVYWlRnZjVERFVCUUZrR2JZcTBXRFJjRTZCNnQzS3RmSyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91bml0cyI7czo1OiJyb3V0ZSI7czoxMToidW5pdHMuaW5kZXgiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1770369434);
+('tRb6prWsLbp6K1ax3WBIkKaUrXHRrwLUK6PEfCA5', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibmNIakp1TmhPeFBVd2VqcXFMSE5xcXFFNFVnZGRlSmthTG5ZWURCZCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91bml0cyI7czo1OiJyb3V0ZSI7czoxMToidW5pdHMuaW5kZXgiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1770715803),
+('vWbvG9hVEdTAPhhbB9VBQiicepUyVMAIuvqZmCVq', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoieng2U2pIRkVvQnBFN2k0a3dLamxwbjhDeTJLbmVrYk9rNXZkdnNaMiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kaXJlY3RvcmllcyI7czo1OiJyb3V0ZSI7czoxNzoiZGlyZWN0b3JpZXMuaW5kZXgiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1770707341);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `storage_locations`
+--
+
+CREATE TABLE `storage_locations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `storage_locations`
+--
+
+INSERT INTO `storage_locations` (`id`, `name`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Контейнер', NULL, '2026-02-09 04:11:14', '2026-02-09 04:11:14'),
+(2, 'Машинный Зал', NULL, '2026-02-09 04:11:39', '2026-02-09 04:46:10'),
+(3, 'Мезонин', NULL, '2026-02-09 05:41:48', '2026-02-09 05:41:48');
 
 -- --------------------------------------------------------
 
@@ -448,7 +541,15 @@ CREATE TABLE `units` (
 
 INSERT INTO `units` (`id`, `name`, `short_name`, `code`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'штука', 'шт', NULL, 1, '2026-02-06 06:06:13', '2026-02-06 06:09:52', NULL),
-(2, 'литр', 'л', NULL, 1, '2026-02-06 06:08:34', '2026-02-06 06:17:14', NULL);
+(2, 'литр', 'л', NULL, 1, '2026-02-06 06:08:34', '2026-02-06 06:17:14', NULL),
+(3, 'килограмм', 'кг', NULL, 1, '2026-02-06 03:06:13', '2026-02-06 03:09:52', NULL),
+(4, 'тонна', 'т', NULL, 1, '2026-02-06 03:06:13', '2026-02-06 03:09:52', NULL),
+(5, 'комплект', 'компл', NULL, 1, '2026-02-06 03:06:13', '2026-02-06 03:09:52', NULL),
+(6, 'пара', 'пар', NULL, 1, '2026-02-06 03:06:13', '2026-02-06 03:09:52', NULL),
+(7, 'метр', 'м', NULL, 1, '2026-02-06 03:06:13', '2026-02-06 03:09:52', NULL),
+(8, 'квадратный метр', 'м2', NULL, 1, '2026-02-06 03:06:13', '2026-02-06 03:09:52', NULL),
+(9, 'упаковка', 'упак', NULL, 1, '2026-02-06 03:06:13', '2026-02-06 03:09:52', NULL),
+(10, 'погонный метр', 'пог. м', NULL, 1, '2026-02-06 03:08:34', '2026-02-06 03:17:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -525,6 +626,13 @@ ALTER TABLE `cache_locks`
   ADD PRIMARY KEY (`key`);
 
 --
+-- Индексы таблицы `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `categories_parent_id_foreign` (`parent_id`);
+
+--
 -- Индексы таблицы `contractors`
 --
 ALTER TABLE `contractors`
@@ -574,6 +682,15 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `nomenclatures`
+--
+ALTER TABLE `nomenclatures`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `nomenclatures_category_id_foreign` (`category_id`),
+  ADD KEY `nomenclatures_unit_id_foreign` (`unit_id`),
+  ADD KEY `nomenclatures_name_index` (`name`);
+
+--
 -- Индексы таблицы `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
@@ -611,6 +728,13 @@ ALTER TABLE `sessions`
   ADD KEY `sessions_last_activity_index` (`last_activity`);
 
 --
+-- Индексы таблицы `storage_locations`
+--
+ALTER TABLE `storage_locations`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `storage_locations_name_unique` (`name`);
+
+--
 -- Индексы таблицы `units`
 --
 ALTER TABLE `units`
@@ -639,6 +763,12 @@ ALTER TABLE `vats`
 --
 ALTER TABLE `budgets`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT для таблицы `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT для таблицы `contractors`
@@ -674,7 +804,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT для таблицы `nomenclatures`
+--
+ALTER TABLE `nomenclatures`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `payment_authorizations`
@@ -695,10 +831,16 @@ ALTER TABLE `receipt_items`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
+-- AUTO_INCREMENT для таблицы `storage_locations`
+--
+ALTER TABLE `storage_locations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT для таблицы `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -724,11 +866,24 @@ ALTER TABLE `budgets`
   ADD CONSTRAINT `budgets_vat_id_foreign` FOREIGN KEY (`vat_id`) REFERENCES `vats` (`id`);
 
 --
+-- Ограничения внешнего ключа таблицы `categories`
+--
+ALTER TABLE `categories`
+  ADD CONSTRAINT `categories_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL;
+
+--
 -- Ограничения внешнего ключа таблицы `contractors`
 --
 ALTER TABLE `contractors`
   ADD CONSTRAINT `contractors_type_id_foreign` FOREIGN KEY (`type_id`) REFERENCES `contractor_types` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `contractors_vat_id_foreign` FOREIGN KEY (`vat_id`) REFERENCES `vats` (`id`) ON DELETE SET NULL;
+
+--
+-- Ограничения внешнего ключа таблицы `nomenclatures`
+--
+ALTER TABLE `nomenclatures`
+  ADD CONSTRAINT `nomenclatures_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `nomenclatures_unit_id_foreign` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `payment_authorizations`
