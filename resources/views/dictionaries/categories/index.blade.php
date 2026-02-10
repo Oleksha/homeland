@@ -19,7 +19,7 @@
 
     </div>
 
-    <table class="table table-striped align-middle mb-0">
+    <table class="table table-striped align-middle mb-3">
         <thead>
         <tr>
             <th>Название</th>
@@ -54,5 +54,7 @@
         @endforeach
         </tbody>
     </table>
+
+    {{ $categories->links() }}
 
 @endsection
