@@ -125,3 +125,17 @@ Route::prefix('categories')
     });
 
 Route::resource('categories', Controllers\CategoryController::class);
+
+// Номенклатура
+Route::prefix('nomenclatures')
+    ->name('nomenclatures.')
+    ->controller(Controllers\NomenclatureController::class)
+    ->group(function () {
+
+        Route::get('archive', 'archive')->name('archive');
+        Route::post('{id}/restore', 'restore')->name('restore');
+        Route::delete('{id}/force-delete', 'forceDelete')->name('force-delete');
+
+    });
+
+Route::resource('nomenclatures', Controllers\NomenclatureController::class);
