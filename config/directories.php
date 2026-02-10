@@ -65,4 +65,13 @@ return [
         'soft_delete' => true,
     ],
 
+    'nomenclatures' => [
+        'title' => 'Номенклатура',
+        'description' => 'Справочник номенклатуры для складских операций и формирования отчетов.',
+        'route' => 'nomenclatures.index',
+        'model' => \App\Domains\Nomenclature\Models\Nomenclature::class,
+        'icon' => 'bi bi-wallet2',
+        'soft_delete' => true,
+    ],
+
 ];
