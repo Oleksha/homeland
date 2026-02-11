@@ -13,15 +13,15 @@ use App\Domains\Budget\Actions\UpdateBudget;
 use App\Domains\Budget\DTO\BudgetData;
 use App\Domains\Budget\Imports\BudgetXlsxImport;
 use App\Domains\Budget\Models\Budget;
+use App\Http\Requests\BudgetImportRequest;
 use App\Http\Requests\BudgetIndexRequest;
 use App\Http\Requests\BudgetRequest;
-use Illuminate\Http\Request;
 use Vtiful\Kernel\Excel;
 
 class BudgetController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Отображение списка бюджетных операций.
      */
     public function index(
         BudgetIndexRequest $request,
@@ -38,7 +38,7 @@ class BudgetController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Вывод формы добавления бюджетной операции.
      */
     public function create(BudgetFormAction $action)
     {
@@ -46,7 +46,7 @@ class BudgetController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Сохранение новой БО в БД.
      */
     public function store(BudgetRequest $request)
     {
@@ -58,7 +58,7 @@ class BudgetController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Просмотр выбранной БО.
      */
     public function show(string $id)
     {
@@ -66,22 +66,15 @@ class BudgetController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Вывод формы изменения бюджетной операции.
      */
     public function edit(Budget $budget, BudgetFormAction $action)
     {
         return $action->execute($budget);
-        /*return view('budget.edit', [
-            'budget' => $budget,
-            'breadcrumbs' => [
-                ['title' => 'Бюджетные операции', 'url' => route('budgets.index')],
-                ['title' => 'Изменение бюджетной операции'],
-            ],
-        ]);*/
     }
 
     /**
-     * Update the specified resource in storage.
+     * Сохранение изменений БО в БД.
      */
     public function update(BudgetRequest $request, Budget $budget)
     {
@@ -93,7 +86,7 @@ class BudgetController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Перенос БО в архив.
      */
     public function destroy(Budget $budget)
     {
@@ -104,6 +97,9 @@ class BudgetController extends Controller
             ->with('success', 'Бюджетная операция перемещена в архив.');
     }
 
+    /**
+     * Восстановление БО из архив.
+     */
     public function restore(int $id)
     {
         RestoreBudget::run($id);
@@ -113,6 +109,9 @@ class BudgetController extends Controller
             ->with('success', 'Бюджетная операция восстановлена.');
     }
 
+    /**
+     * Полное удаление БО из БД.
+     */
     public function forceDelete(int $id)
     {
         ForceDeleteBudget::run($id);
@@ -122,6 +121,9 @@ class BudgetController extends Controller
             ->with('success', 'Бюджетная операция удалена навсегда.');
     }
 
+    /**
+     * Импорт списка БО из файла Excel.
+     */
     public function import(BudgetImportRequest $request)
     {
         $import = new BudgetXlsxImport();
