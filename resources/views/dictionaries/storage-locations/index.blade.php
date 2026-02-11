@@ -19,7 +19,7 @@
 
     </div>
 
-    <table class="table table-striped align-middle mb-0">
+    <table class="table table-striped align-middle mb-3">
         <thead>
         <tr>
             <th>Наименование</th>
@@ -52,5 +52,7 @@
         @endforeach
         </tbody>
     </table>
+
+    {{ $locations->links() }}
 
 @endsection
