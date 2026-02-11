@@ -187,4 +187,70 @@
         @endif
 
     </div>
+    {{-- Modal Import Budget --}}
+    <div class="modal fade" id="importBudgetModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <form method="POST"
+                      action="{{ route('budgets.import') }}"
+                      enctype="multipart/form-data">
+
+                    @csrf
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Импорт бюджетных операций из Excel
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        {{-- Файл --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                Выберите файл Excel
+                            </label>
+
+                            <input type="file"
+                                   name="file"
+                                   class="form-control"
+                                   accept=".xlsx,.xls"
+                                   required>
+
+                            <div class="form-text">
+                                Поддерживаются файлы .xlsx / .xls
+                            </div>
+                        </div>
+
+                        {{-- Подсказка --}}
+                        <div class="alert alert-info mb-0">
+                            Формат файла должен соответствовать шаблону импорта.
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Отмена
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-success">
+                            Импортировать
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
 @endsection
