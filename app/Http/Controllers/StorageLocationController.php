@@ -16,7 +16,7 @@ class StorageLocationController extends Controller
     public function index()
     {
         return view('dictionaries.storage-locations.index', [
-            'locations' => (new StorageLocation())->orderBy('name')->get(),
+            'locations' => (new StorageLocation())->orderBy('name')->paginate(10),
             'breadcrumbs' => [
                 ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'Места хранения'],
@@ -83,7 +83,7 @@ class StorageLocationController extends Controller
     public function archive()
     {
         return view('dictionaries.storage-locations.archive', [
-            'locations' => StorageLocation::onlyTrashed()->orderBy('name')->get(),
+            'locations' => StorageLocation::onlyTrashed()->orderBy('name')->paginate(10),
             'breadcrumbs' => [
                 ['title' => 'Справочники', 'url' => route('directories.index')],
                 ['title' => 'Архив мест хранения'],
