@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Budget\Actions\ImportBudgetAction;
 use App\Http\Requests\BudgetImportRequest;
+use App\Domains\Budget\Actions\ImportBudgetsAction;
 
-final class ImportBudgetController
+class ImportBudgetController extends Controller
 {
     public function __invoke(BudgetImportRequest $request)
     {
-        ImportBudgetAction::run($request->file('file'));
+        ImportBudgetsAction::run(
+            $request->file('file')
+        );
 
-        return back()->with('success', 'Импорт запущен');
+        return back()->with('success', 'Импорт выполнен');
     }
 }
