@@ -64,8 +64,6 @@ Route::prefix('budgets')
 
 Route::prefix('budgets')->name('budgets.')->group(function () {
     Route::post('import', Controllers\ImportBudgetController::class)->name('import');
-    //Route::get('import/template', Controllers\BudgetImportTemplateController::class)
-    //    ->name('import.template');
 });
 
 Route::resource('budgets', Controllers\BudgetController::class);
