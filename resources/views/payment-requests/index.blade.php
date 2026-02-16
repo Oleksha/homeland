@@ -8,7 +8,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 mb-0">Заявки на оплату</h1>
 
-            <a href="#" class="btn btn-primary">
+            <a href="{{ route('payment-requests.create') }}" class="btn btn-primary">
                 + Новая заявка
             </a>
         </div>

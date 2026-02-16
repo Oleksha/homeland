@@ -139,10 +139,4 @@ Route::prefix('nomenclatures')
 Route::resource('nomenclatures', Controllers\NomenclatureController::class);
 
 // Оплаты
-Route::prefix('payment-requests')
-    ->name('payment-requests.')
-    ->group(function () {
-        Route::get('/', [Controllers\PaymentRequestController::class, 'index'])
-            ->name('index');
-    });
-
+Route::resource('payment-requests', Controllers\PaymentRequestController::class);
