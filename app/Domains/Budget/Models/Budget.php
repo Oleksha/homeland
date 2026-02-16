@@ -4,9 +4,11 @@ namespace App\Domains\Budget\Models;
 
 use App\Domains\Budget\Enums\BudgetStatus;
 use App\Domains\ExpenseItem\Models\ExpenseItem;
+use App\Domains\Payment\Models\PaymentRequest;
 use App\Domains\Vat\Models\Vat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Budget extends Model
@@ -48,5 +50,14 @@ class Budget extends Model
     public function expenseItem(): BelongsTo
     {
         return $this->belongsTo(ExpenseItem::class);
+    }
+
+    public function paymentRequests(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            PaymentRequest::class,
+            'payment_request_budget'
+        )->withPivot(['amount', 'vat_id'])
+            ->withTimestamps();
     }
 }

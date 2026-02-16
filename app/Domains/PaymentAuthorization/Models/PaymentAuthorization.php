@@ -4,9 +4,11 @@ namespace App\Domains\PaymentAuthorization\Models;
 
 use App\Domains\Contractor\Models\Contractor;
 use App\Domains\ExpenseItem\Models\ExpenseItem;
+use App\Domains\Payment\Models\PaymentRequest;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class PaymentAuthorization extends Model
@@ -36,6 +38,15 @@ final class PaymentAuthorization extends Model
     public function expenseItem(): BelongsTo
     {
         return $this->belongsTo(ExpenseItem::class)->withTrashed();
+    }
+
+    public function paymentRequests(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            PaymentRequest::class,
+            'payment_request_authorization'
+        )->withPivot(['amount'])
+            ->withTimestamps();
     }
 
     public function scopeActive($query)

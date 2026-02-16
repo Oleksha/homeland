@@ -55,6 +55,13 @@
 
                         <li>
                             <a class="dropdown-item"
+                               href="{{ route('payment-requests.index') }}">
+                                Заявки на оплату
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
                                href="{{ route('payment-authorizations.index') }}">
                                 Разрешения на оплату
                             </a>

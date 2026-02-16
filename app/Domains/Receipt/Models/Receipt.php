@@ -3,9 +3,11 @@
 namespace App\Domains\Receipt\Models;
 
 use App\Domains\Contractor\Models\Contractor;
+use App\Domains\Payment\Models\PaymentRequest;
 use App\Domains\Receipt\Enums\ReceiptType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -45,5 +47,14 @@ class Receipt extends Model
     public function contractor(): BelongsTo
     {
         return $this->belongsTo(Contractor::class);
+    }
+
+    public function paymentRequests(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            PaymentRequest::class,
+            'payment_request_receipt'
+        )->withPivot(['amount', 'vat_id'])
+            ->withTimestamps();
     }
 }
