@@ -12,23 +12,18 @@ final class IndexPaymentRequestsAction
     {
         return PaymentRequest::query()
 
-            ->when($filter->archived, fn ($q) => $q->onlyTrashed())
+            ->whereBetween('date', [
+                $filter->month->startOfMonth(),
+                $filter->month->endOfMonth(),
+            ])
 
-            ->when($filter->period, function ($q) use ($filter) {
-                $q->whereBetween('date', [
-                    $filter->period->startOfMonth(),
-                    $filter->period->endOfMonth(),
-                ]);
-            })
-
-            ->when(
-                $filter->status,
-                fn ($q) => $q->where('status', $filter->status->value)
+            ->when($filter->status,
+                fn ($q) => $q->where('status', $filter->status)
             )
 
             ->with(['contractor', 'vat'])
             ->orderByDesc('date')
-            ->paginate(15)
+            ->paginate(20)
             ->withQueryString();
     }
 }

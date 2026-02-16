@@ -18,12 +18,32 @@
             <div class="card-body">
                 <form method="get" class="row g-3 align-items-end">
 
+                    @php
+                        $currentMonth = $filter->month;
+                        $prevMonth = $currentMonth->subMonth()->format('Y-m');
+                        $nextMonth = $currentMonth->addMonth()->format('Y-m');
+                    @endphp
                     <div class="col-md-3">
                         <label class="form-label">Период</label>
+                        <div class="input-group">
+
+                        <a href="{{ route('payment-requests.index', array_merge(request()->except('month'), ['month' => $prevMonth])) }}"
+                           class="btn btn-outline-secondary">
+                            ←
+                        </a>
+
+                        {{-- Поле выбора месяца --}}
                         <input type="month"
                                name="period"
                                value="{{ $filters['period'] ?? now()->format('Y-m') }}"
                                class="form-control">
+
+                        <a href="{{ route('payment-requests.index', array_merge(request()->except('month'), ['month' => $nextMonth])) }}"
+                           class="btn btn-outline-secondary">
+                            →
+                        </a>
+
+                    </div>
                     </div>
 
                     <div class="col-md-3">
