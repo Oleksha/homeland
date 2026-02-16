@@ -32,32 +32,41 @@
                     {{-- Период --}}
                     <div class="col-md-3">
                         <label class="form-label">Период</label>
-                        <input
-                            type="month"
-                            name="period"
-                            value="{{ request('period') }}"
-                            class="form-control"
-                        >
+
+                        <div class="input-group">
+
+                            {{-- Предыдущий месяц --}}
+                            <a href="{{ route('budgets.index', array_merge(request()->query(), [
+                                'period' => \Carbon\Carbon::parse(
+                                    $filters['period'] ?? session('budget_period', now()->format('Y-m'))
+                                )->subMonth()->format('Y-m')
+                                ])) }}"
+                               class="btn btn-outline-secondary">
+                                ←
+                            </a>
+
+                            {{-- Поле выбора месяца --}}
+                            <input type="month"
+                                   name="period"
+                                   value="{{ $filters['period'] ?? session('budget_period', now()->format('Y-m')) }}"
+                                   class="form-control">
+
+                            {{-- Следующий месяц --}}
+                            <a href="{{ route('budgets.index', array_merge(request()->query(), [
+            'period' => \Carbon\Carbon::parse(
+                $filters['period'] ?? session('budget_period', now()->format('Y-m'))
+            )->addMonth()->format('Y-m')
+        ])) }}"
+                               class="btn btn-outline-secondary">
+                                →
+                            </a>
+
+                        </div>
                     </div>
 
-                    {{-- Статус --}}
-                    <div class="col-md-3">
-                        <label class="form-label">Статус</label>
-                        <select name="status" class="form-select">
-                            <option value="">Все статусы</option>
-                            @foreach(\App\Domains\Budget\Enums\BudgetStatus::cases() as $status)
-                                <option
-                                    value="{{ $status->value }}"
-                                    @selected(request('status') === $status->value)
-                                >
-                                    {{ $status->label() }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
 
                     {{-- Архив --}}
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <div class="form-check mt-4">
                             {{-- важно для корректной передачи 0 --}}
                             <input type="hidden" name="archived" value="0">

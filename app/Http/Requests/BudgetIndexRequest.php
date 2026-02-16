@@ -26,7 +26,7 @@ class BudgetIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'period' => ['nullable', 'date'],
+            'period' => ['nullable', 'date_format:Y-m'],
             'status' => ['nullable', Rule::in(BudgetStatus::values())],
             'archived' => ['nullable', 'boolean'],
         ];
@@ -34,16 +34,25 @@ class BudgetIndexRequest extends FormRequest
 
     public function toDto(): BudgetIndexFilterDTO
     {
+        $validated = $this->validated();
+
+        if (!empty($validated['period'])) {
+            session(['budget_period' => $validated['period']]);
+        }
+
+        $period = $validated['period']
+            ?? session('budget_period')
+            ?? now()->format('Y-m');
+
         return new BudgetIndexFilterDTO(
-            period: $this->period
-                ? CarbonImmutable::parse($this->period)
+            period: CarbonImmutable::createFromFormat('Y-m', $period)
+                ->startOfMonth(),
+
+            status: isset($validated['status'])
+                ? BudgetStatus::from($validated['status'])
                 : null,
 
-            status: $this->status
-                ? BudgetStatus::from($this->status)
-                : null,
-
-            archived: (bool) $this->boolean('archived'),
+            archived: (bool)($validated['archived'] ?? false),
         );
     }
 }

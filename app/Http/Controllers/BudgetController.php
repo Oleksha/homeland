@@ -28,8 +28,11 @@ class BudgetController extends Controller
         IndexBudgetsAction $action
     )
     {
+        $dto = $request->toDto();
+
         return view('budget.index', [
-            'budgets' => $action->execute($request->toDto()),
+            'budgets' => $action->execute($dto),
+            'period' => $dto->period,
             'filters' => $request->validated(),
             'breadcrumbs' => [
                 ['title' => 'Бюджетные операции'],
